@@ -36,16 +36,21 @@ export default class UserController {
     return response.status(204)
   }
 
-  public async storeLivreur({ request, response }: HttpContextContract) {
-    const userData = request.only(['nom', 'prenom', 'email', 'password', 'role'])
-    userData.role = 'livreur' // Assure-toi de définir le rôle sur 'livreur'
-    
-    const user = await User.create(userData)
+  public async addLivreur({ request, response }: HttpContextContract) {
+    const userData = request.only(['email', 'password', 'role'])
+    userData.role = 'livreur'
+
+    const user = new User()
+    user.email = userData.email
+    user.password = userData.password
+    user.role = userData.role
+
+    await user.save()
     return response.status(201).json(user)
   }
 
   public async listLivreurs({ response }: HttpContextContract) {
-    const livreurs = await User.query().where('role', 'livreur').select(['nom', 'prenom', 'email'])
+    const livreurs = await User.query().where('role', 'livreur').select(['id', 'email'])
     return response.status(200).json(livreurs)
   }
   

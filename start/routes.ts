@@ -22,13 +22,13 @@ import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
-  const products = await Database.from('product').select('*');
-  return { hello: 'testt', products }
+  //const products = await Database.from('product').select('*');
+  return { hello: 'testt'}
 })
-Route.get('/users', 'UserController.index') // Afficher tous les utilisateurs
-Route.get('/users/:id', 'UserController.show') // Afficher un utilisateur spécifique
-Route.put('/users/:id', 'UserController.update') // Mettre à jour un utilisateur
-Route.delete('/users/:id', 'UserController.destroy') // Supprimer un utilisateur
+Route.get('/users', 'UsersController.index') // Afficher tous les utilisateurs
+Route.get('/users/:id', 'UsersController.show') // Afficher un utilisateur spécifique
+Route.put('/users/:id', 'UsersController.update') // Mettre à jour un utilisateur
+Route.delete('/users/:id', 'UsersController.destroy') // Supprimer un utilisateur
 
-Route.post('/users/livreurs', 'UserController.storeLivreur') // Ajouter un livreur
-Route.get('/users/livreurs', 'UserController.listLivreurs') // Afficher la liste des livreurs
+Route.post('/users/livreurs', 'UsersController.addLivreur') // Ajouter un livreur
+Route.get('/users/livreurs', 'UsersController.listLivreurs') // Afficher la liste des livreurs
