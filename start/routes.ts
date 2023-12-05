@@ -23,5 +23,5 @@ import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
   const products = await Database.from('product').select('*');
-  return { hello: 'test', products }
+  return { hello: 'hello', products }
 })
