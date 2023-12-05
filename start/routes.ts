@@ -22,6 +22,8 @@ import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
-  const products = await Database.from('product').select('*');
+  const products = await Database.from('beds').select('*');
   return { hello: 'testt', products }
 })
+Route.post('/auth/login', 'AuthController.login')
+Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')

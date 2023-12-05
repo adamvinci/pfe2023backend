@@ -41,4 +41,6 @@ Server.middleware.register([
 |
 */
 Server.middleware.registerNamed({
+  isAdmin: () => import('App/Middleware/CheckUserRole'),
+  auth: () => import('App/Middleware/Auth'),
 })
