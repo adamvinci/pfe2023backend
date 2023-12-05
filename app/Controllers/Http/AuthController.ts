@@ -5,7 +5,6 @@ import StoreUserValidator from 'App/Validators/Auth/StoreUserValidator'
 
 export default class AuthController {
     public async register({ request, response }: HttpContextContract) {
-        console.log(request)
         const payload = await request.validate(StoreUserValidator)
 
         const user = await User.create(payload)
