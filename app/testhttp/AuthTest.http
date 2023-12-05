@@ -1,0 +1,73 @@
+@baseUrl = http://localhost:3333
+
+###
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email":"admin@hotmail.com",
+    "password":"71password"
+}
+
+
+### register livreur with user token token
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+    "email": "livreur1@hotmail.com",
+    "password": "livreur1"
+}
+
+### register livreur with admin token
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer MjE.B8HIYIDAOV01-EvfozO5ZntdvpUrASROH9Px2AMNXzwIyFxLSWsnQg7WWBay
+
+{
+    "email": "livreur1@hotmail.com",
+    "password": "livreur1"
+}
+
+### login livreur
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email":"livreur1@hotmail.com",
+    "password":"livreur1"
+}
+
+### register livreur with user token (403)
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer MjI.rXgaHBCPlp-EQY6tIlRXGVSkPkLapIxfDuTl-GLJGu3ahp1daqapQpfhuYN3
+
+{
+    "email": "livreur1@hotmail.com",
+    "password": "livreur1"
+}
+
+
+
+// ****************************Badrequest/conflit/notfoundtest*/////////////////////////// */
+
+### 
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer MjE.B8HIYIDAOV01-EvfozO5ZntdvpUrASROH9Px2AMNXzwIyFxLSWsnQg7WWBay
+
+{
+    "ee": "livreur1@hotmail.com",
+    "paword": "livreur1"
+}
+
+### 
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "eail":"livreur1@hotmail.com",
+    "passwrd":"livreur1"
+}

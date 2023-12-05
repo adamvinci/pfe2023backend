@@ -22,8 +22,8 @@ import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
-  //const products = await Database.from('product').select('*');
-  return { hello: 'testt'}
+  const products = await Database.from('beds').select('*');
+  return { hello: 'testt',products}
 })
 Route.get('/users', 'UsersController.index') // Afficher tous les utilisateurs
 Route.get('/users/:id', 'UsersController.show') // Afficher un utilisateur spécifique
@@ -32,3 +32,5 @@ Route.delete('/users/:id', 'UsersController.destroy') // Supprimer un utilisateu
 
 Route.post('/users/livreurs', 'UsersController.addLivreur') // Ajouter un livreur
 Route.get('/users/livreurs', 'UsersController.listLivreurs') // Afficher la liste des livreurs
+Route.post('/auth/login', 'AuthController.login')
+Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
