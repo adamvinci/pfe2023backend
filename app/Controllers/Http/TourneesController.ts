@@ -25,7 +25,7 @@ export default class TourneesController {
         return response.ok(tasks)
     }
 
-    // uptade isDelivered to true if not already true and if the delivery is assigned to this user
+    // update isDelivered to true if not already true and if the delivery is assigned to this user
     public async updateCommandStateAndQuantity({ params, request, response, auth }: HttpContextContract) {
         const userId = auth.user!
 
