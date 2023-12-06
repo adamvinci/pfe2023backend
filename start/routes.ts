@@ -25,7 +25,7 @@ Route.get('/', async () => {
   const products = await Database.from('beds').select('*');
   return { hello: 'testt',products}
 })
-Route.get('/users', 'UsersController.index') // Afficher tous les utilisateurs
+Route.get('/users', 'UsersController.index').middleware('isAdmin') // Afficher tous les utilisateurs
 Route.get('/users/livreurs', 'UsersController.listLivreurs').middleware('isAdmin') // Afficher la liste des livreurs
 Route.post('/users/livreurs', 'UsersController.addLivreur').middleware('isAdmin') // Ajouter un livreur
 //AuthController
