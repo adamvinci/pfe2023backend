@@ -9,10 +9,21 @@ export default class Tournee extends BaseModel {
 
   @column()
   public nombreCaisseLingeS?: number
+
   @column()
   public nombreCaisseLingeM?: number
+
   @column()
   public nombreCaisseLingeL?: number
+
+  @column()
+  public nombreCaisseLingeSRestante?: number
+
+  @column()
+  public nombreCaisseLingeMRestante?: number
+
+  @column()
+  public nombreCaisseLingeLRestante?: number
 
   @column()
   public nombreCaisseInsert?: number

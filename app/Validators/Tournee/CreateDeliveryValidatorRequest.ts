@@ -32,6 +32,7 @@ export default class CreateDeliveryValidator {
     nombreCaisseGant: schema.number(),
     tailleCouche: schema.string(),
     pourcentageSupplement: schema.number(),
+    //jourDeLaSemaine:schema.array
   })
 
   /**

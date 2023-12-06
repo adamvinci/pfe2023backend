@@ -52,6 +52,9 @@ export default class TourneesController {
 
         return response.ok({ delivery })
     }
+    public async uptadeDeliveredQuantity({ params, request, response }: HttpContextContract) {
+
+    }
 
     public async assignDelivery({ params, response, }: HttpContextContract) {
 
