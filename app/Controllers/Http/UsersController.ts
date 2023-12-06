@@ -7,6 +7,10 @@ export default class UserController {
     const users = await User.all()
     return response.status(200).json(users)
   }
+  public async listLivreurs({ response }: HttpContextContract) {
+    const list = {"hello":"shesh"}
+    return response.status(200).json(list)
+  }
 
   public async show({ params, response }: HttpContextContract) {
     const user = await User.find(params.id)
@@ -37,21 +41,17 @@ export default class UserController {
   }
 
   public async addLivreur({ request, response }: HttpContextContract) {
-    const userData = request.only(['email', 'password', 'role'])
-    userData.role = 'livreur'
-
+    const userData = request.only(['email', 'password','isAdmin'])
+    userData.isAdmin = false
     const user = new User()
     user.email = userData.email
     user.password = userData.password
-    user.role = userData.role
+    user.isAdmin = userData.isAdmin
 
     await user.save()
     return response.status(201).json(user)
   }
 
-  public async listLivreurs({ response }: HttpContextContract) {
-    const livreurs = await User.query().where('role', 'livreur').select(['id', 'email'])
-    return response.status(200).json(livreurs)
-  }
+  
   
 }

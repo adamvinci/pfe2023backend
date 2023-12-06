@@ -13,7 +13,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public role: 'admin' | 'livreur'
+  public isAdmin: boolean
 
   @beforeSave()
   public static async hashPassword(user: User) {
