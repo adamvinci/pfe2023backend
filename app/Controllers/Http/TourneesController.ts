@@ -54,7 +54,7 @@ export default class TourneesController {
         return response.ok({ delivery })
     }
 
-    /* public async assignDelivery({ params, response, }: HttpContextContract) {
+    /*  public async assignDelivery({ params, response, }: HttpContextContract) {
  
          const { idCreche, idDeliveryMan } = await params.validate(AssignDeliveryValidator);
          const creche = Creche.find(idCreche);
