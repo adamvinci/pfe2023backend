@@ -15,6 +15,7 @@ export default class extends BaseSchema {
       table.integer('nombre_caisse_gant').nullable()
       table.string('taille_couche').nullable()
       table.decimal('pourcentage_supplement', 5, 2).notNullable().defaultTo(10.0)
+      table.boolean('is_delivered').notNullable().defaultTo('false')
       table.unique(['user_id', 'creche_id', 'date'])
     })
   }

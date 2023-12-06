@@ -2,8 +2,24 @@
 
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer MQ.JRvFxHtfVtg39j8kqag1LDNPYYYbkMzVbVseUHVamrzVgH2C7jjVbMianlR8
+Authorization: Bearer MQ.TJY-Ac_EOx1wWYOcO7TAQ1AGCIPbs1yWC6B6WnD_7LaFMumNnZWfL4KyNxYR	
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer Mg.kD0mmlYkv0LugLvK2IaoguLKmH3ZXIyWBArMTRf-5R6pgRV8MhNEn44_AckF
+Authorization: Bearer Mg.5BiIhxhnVzjq-95z4461cH95IFjwXBTLTUTzGpARgsBVv3nXTXbIZwsYb8Qr
+
+### update not assigned delivery 
+PUT  {{baseUrl}}/tournees/updateState/1 
+Content-Type: application/json
+Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
+
+### update assigned  delivery
+PUT  {{baseUrl}}/tournees/updateState/2 
+Content-Type: application/json
+Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
+
+
+### update already delivered
+PUT  {{baseUrl}}/tournees/updateState/2 
+Content-Type: application/json
+Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU

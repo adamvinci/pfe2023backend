@@ -34,6 +34,8 @@ export default class Tournee extends BaseModel {
   @column()
   public crecheId: number
 
+  @column()
+  public isDelivered: boolean
 
   @column.date()
   public date: DateTime
