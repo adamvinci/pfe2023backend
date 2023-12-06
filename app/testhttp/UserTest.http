@@ -2,14 +2,18 @@
 
 
 ### get all users
-GET {{baseUrl}}/users/livreurs
+GET {{baseUrl}}/users
 Content-Type: application/json
-Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxcQ
+Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
 
 
 ### get all users with non-admin token
-GET {{baseUrl}}/users/livreurs
+GET {{baseUrl}}/users
 Content-Type: application/json
-Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxc
+Authorization: Bearer OA.Pido16BeYyO0VmwylH0Nc_qva-ylk1MZwo-JkchrrLdfyiYbJkr-0ri2nAH5
 
+### delete one
+DELETE {{baseUrl}}/users/2
+Content-Type: application/json
+Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
 

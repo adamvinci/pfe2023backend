@@ -26,4 +26,11 @@ export default class CrechesController {
         await creche?.merge(payload).save()
         return response.ok({ creche });
     }
+    public async deleteOne({ response, params }: HttpContextContract) {
+        const idCreche = params.id
+        const creche = await Creche.find(idCreche)
+        if (creche == null) return response.notFound();
+        creche.delete()
+        return response.ok({ message: "Creche deleted" });
+    }
 }

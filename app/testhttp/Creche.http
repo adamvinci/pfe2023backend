@@ -29,3 +29,9 @@ Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_J
     "nombreCaisseGant": 7,
     "gsm":"0456"
 }
+
+### delete one
+DELETE {{baseUrl}}/creche/1
+Content-Type: application/json
+Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
+

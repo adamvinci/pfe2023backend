@@ -22,9 +22,10 @@ import Route from '@ioc:Adonis/Core/Route'
 import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
-  const products = await Database.from('beds').select('*');
-  return { hello: 'testt', products }
+  const products = await Database.from('creches').select('*');
+  return { hello: 'hello', products }
 })
+
 //AuthController
 Route.post('/auth/login', 'AuthController.login')
 Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
@@ -38,7 +39,8 @@ Route.put('/tournees/updateState/:id', 'TourneesController.updateCommandStateAnd
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin')
 Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin')
 Route.post('/creches/:idCreche', 'CrechesController.updateCommand').middleware('isAdmin')
+Route.delete('/creche/:id', 'CrechesController.deleteOne').middleware('isAdmin')
 
 // UserController
-Route.get('/users/livreurs', 'UsersController.listLivreurs').middleware('isAdmin') // Afficher la liste des livreurs
-Route.post('/users/livreurs', 'UsersController.addLivreur').middleware('isAdmin') // Ajouter un livreur
+Route.get('/users', 'UsersController.listLivreurs').middleware('isAdmin') // Afficher la liste des livreurs
+Route.delete('/users/:id', 'UsersController.deleteOne').middleware('isAdmin') // Suprprime un livreurs
