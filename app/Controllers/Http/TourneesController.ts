@@ -52,28 +52,28 @@ export default class TourneesController {
         return response.ok({ delivery })
     }
 
-    /*   public async assignDelivery({ params, response, }: HttpContextContract) {
- 
-         const { idCreche, idDeliveryMan } = await params.validate(AssignDeliveryValidator);
-         const creche = Creche.find(idCreche);
-         const deliveryMan = User.find(idDeliveryMan);
-         if (creche == null || deliveryMan == null) {
-             response.notFound({ message: 'DeliveryMan or nursery id does not exist' })
-         }
-         const delivery = await Tournee.query()
-             .where('creche_id', idCreche)
- 
-         if (delivery == null) {
-             //create for each two days depending on creche.jourdelivrasion 
- 
-             return response.ok({ message: "The delivery for this nursery have been created" })
-         } else {
-             //replace the user_id in tournee by the new deliveryMan
- 
-             response.ok({ message: "The delivery man has been updated" })
-         }
- 
-     }*/
+    public async assignDelivery({ params, response, }: HttpContextContract) {
+
+        const { idCreche, idDeliveryMan } = await params.validate(AssignDeliveryValidator);
+        const creche = Creche.find(idCreche);
+        const deliveryMan = User.find(idDeliveryMan);
+        if (creche == null || deliveryMan == null) {
+            response.notFound({ message: 'DeliveryMan or nursery id does not exist' })
+        }
+        const delivery = await Tournee.query()
+            .where('creche_id', idCreche)
+
+        if (delivery == null) {
+            //create for each two days depending on creche.jourdelivrasion 
+
+            return response.ok({ message: "The delivery for this nursery have been created" })
+        } else {
+            //replace the user_id in tournee by the new deliveryMan
+
+            response.ok({ message: "The delivery man has been updated" })
+        }
+
+    }
 
 
 }
