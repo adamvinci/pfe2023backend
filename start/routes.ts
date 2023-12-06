@@ -23,7 +23,7 @@ import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
   const products = await Database.from('creches').select('*');
-  return { hello: 'hello', products }
+  return { hello: 'helloo', products }
 })
 
 //AuthController
