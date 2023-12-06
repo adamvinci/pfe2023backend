@@ -1,11 +1,12 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
+import { DateTime } from 'luxon';
 
 export default class TourneesController {
 
 
-    // Send All the delivery if the token belongs to the admin , if the token belongs to a delivering man it send all its delivery
+    // Send All the delivery if the token belongs to the admin , if the token belongs to a delivering man it send all its delivery for today
     public async getAll({ auth, response }: HttpContextContract) {
         const user = auth.user!
         if (user.$extras.isAdmin) {
@@ -13,7 +14,8 @@ export default class TourneesController {
             return response.ok(tasks)
         }
         const tasks = await User.query().where('id', user.id).preload('tournees', (query) => {
-            query.preload('creches');
+            const today = DateTime.local().toFormat('yyyy-MM-dd');
+            query.where('date', today).preload('creches');
         });
         // const tasks = await Tournee.query().where('userId', user.id).preload('users').preload('creches');
         return response.ok(tasks)
@@ -46,6 +48,10 @@ export default class TourneesController {
 
         return response.ok({ delivery })
     }
+
+    /*public async assignDelivery({ request, response, }: HttpContextContract) {
+
+    }*/
 }
 
 

@@ -2,11 +2,11 @@
 
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer MQ.TJY-Ac_EOx1wWYOcO7TAQ1AGCIPbs1yWC6B6WnD_7LaFMumNnZWfL4KyNxYR	
+Authorization: Bearer MQ.7BoiA4NZCwfKLhuJTcgBrZRWeuYl1Z2xQXXNomYTlhMe7m9s00ppQDHQSOUF
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer Mg.5BiIhxhnVzjq-95z4461cH95IFjwXBTLTUTzGpARgsBVv3nXTXbIZwsYb8Qr
+Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
 
 ### update not assigned delivery 
 PUT  {{baseUrl}}/tournees/updateState/1 
