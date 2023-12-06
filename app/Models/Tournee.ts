@@ -8,7 +8,14 @@ export default class Tournee extends BaseModel {
   public idTournee: number
 
   @column()
-  public nombreCaisseLinge?: number
+  public nombreCaisseLingeS?: number
+
+  @column()
+  public nombreCaisseLingeM?: number
+
+  @column()
+  public nombreCaisseLingeL?: number
+
 
   @column()
   public nombreCaisseInsert?: number
@@ -19,8 +26,6 @@ export default class Tournee extends BaseModel {
   @column()
   public nombreCaisseGant?: number
 
-  @column()
-  public tailleCouche?: string
 
   @column()
   public pourcentageSupplement: number
@@ -34,6 +39,8 @@ export default class Tournee extends BaseModel {
   @column()
   public crecheId: number
 
+  @column()
+  public isDelivered: boolean
 
   @column.date()
   public date: DateTime
