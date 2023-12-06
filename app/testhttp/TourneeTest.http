@@ -2,7 +2,7 @@
 
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer MQ.7BoiA4NZCwfKLhuJTcgBrZRWeuYl1Z2xQXXNomYTlhMe7m9s00ppQDHQSOUF
+Authorization: Bearer Mw.C6oLUSpYqhrb3uTPiHqv-dRh1NWg53EBO35FNJwELTXiZ_CNslfsTnPoqNlj
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
@@ -19,7 +19,7 @@ Content-Type: application/json
 Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
 
 
-### update already delivered
+### update already delivered delivery
 PUT  {{baseUrl}}/tournees/updateState/2 
 Content-Type: application/json
 Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU

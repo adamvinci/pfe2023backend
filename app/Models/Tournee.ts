@@ -8,7 +8,22 @@ export default class Tournee extends BaseModel {
   public idTournee: number
 
   @column()
-  public nombreCaisseLinge?: number
+  public nombreCaisseLingeS?: number
+
+  @column()
+  public nombreCaisseLingeM?: number
+
+  @column()
+  public nombreCaisseLingeL?: number
+
+  @column()
+  public nombreCaisseLingeSRestante?: number
+
+  @column()
+  public nombreCaisseLingeMRestante?: number
+
+  @column()
+  public nombreCaisseLingeLRestante?: number
 
   @column()
   public nombreCaisseInsert?: number
@@ -19,8 +34,6 @@ export default class Tournee extends BaseModel {
   @column()
   public nombreCaisseGant?: number
 
-  @column()
-  public tailleCouche?: string
 
   @column()
   public pourcentageSupplement: number
