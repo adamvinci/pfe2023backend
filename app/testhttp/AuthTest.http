@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
     "email":"admin@hotmail.com",
-    "password":"leongay"
+    "password":"71password"
 }
 ### register livreur with admin token
 POST {{baseUrl}}/auth/register 

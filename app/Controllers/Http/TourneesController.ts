@@ -3,8 +3,7 @@ import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
 import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
-import CreateDeliveryValidatorRequest from 'App/Validators/Tournee/CreateDeliveryValidatorRequest';
-import CreateDeliveryValidatorParam from 'App/Validators/Tournee/CreateDeliveryParamValidator';
+
 import { DateTime } from 'luxon';
 
 export default class TourneesController {
@@ -52,9 +51,9 @@ export default class TourneesController {
 
         return response.ok({ delivery })
     }
-    public async uptadeDeliveredQuantity({ params, request, response }: HttpContextContract) {
-
-    }
+    /* public async uptadeDeliveredQuantity({ params, request, response }: HttpContextContract) {
+ 
+     }*/
 
     public async assignDelivery({ params, response, }: HttpContextContract) {
 
@@ -79,12 +78,7 @@ export default class TourneesController {
 
     }
 
-    public async createDelivery({ params, request, response, }: HttpContextContract) {
-        const { idCreche } = await params.validate(CreateDeliveryValidatorParam);
-        const payload = await request.validate(CreateDeliveryValidatorRequest);
-        //init les date dans la db 
-        await Tournee.create(payload)
-    }
+
 }
 
 
