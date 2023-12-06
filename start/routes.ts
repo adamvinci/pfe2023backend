@@ -32,10 +32,13 @@ Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
 Route.post('/tournees/:idCreche/:idDeliveryMan', 'TourneesController.assignDelivery').middleware('isAdmin')
-
-Route.put('/tournees/updateState/:id', 'TourneesController.updateState').middleware('auth')
+Route.put('/tournees/updateState/:id', 'TourneesController.updateCommandStateAndQuantity').middleware('auth')
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin')
 Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin')
 Route.post('/creches/:idCreche', 'CrechesController.updateCommand').middleware('isAdmin')
+
+// UserController
+Route.get('/users/livreurs', 'UsersController.listLivreurs').middleware('isAdmin') // Afficher la liste des livreurs
+Route.post('/users/livreurs', 'UsersController.addLivreur').middleware('isAdmin') // Ajouter un livreur

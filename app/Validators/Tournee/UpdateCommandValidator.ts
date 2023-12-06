@@ -1,7 +1,7 @@
 import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-export default class AssignDeliveryValidator {
+export default class UpdateCommandValidator {
   constructor(protected ctx: HttpContextContract) { }
 
   /*
@@ -24,8 +24,12 @@ export default class AssignDeliveryValidator {
    *    ```
    */
   public schema = schema.create({
-    idCreche: schema.number([rules.unsigned()]),
-    idDeliveryMan: schema.number([rules.unsigned()]),
+    nombreCaisseGantLivre: schema.number([rules.unsigned()]),
+    nombreCaisseSacPoubelleLivre: schema.number([rules.unsigned()]),
+    nombreCaisseInsertLivre: schema.number([rules.unsigned()]),
+    nombreCaisseLingeLLivre: schema.number([rules.unsigned()]),
+    nombreCaisseLingeMLivre: schema.number([rules.unsigned()]),
+    nombreCaisseLingeSLivre: schema.number([rules.unsigned()]),
   })
 
   /**

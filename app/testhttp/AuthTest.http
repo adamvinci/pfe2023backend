@@ -11,7 +11,7 @@ Content-Type: application/json
 ### register livreur with admin token
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer Mw.Z_rqqPK-5UOn1KCBdMTk5BP6heJMYeVGKvO_lCL26xu-Vfj3r9wkx2GGJXmN
+Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2Gu5tgp 
 
 {
     "email": "livreur1@hotmail.com",

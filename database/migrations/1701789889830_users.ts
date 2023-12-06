@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id').primary()
       table.string('email', 255).notNullable().unique()
       table.string('password', 180).notNullable()
-      table.boolean('isAdmin').notNullable().defaultTo('false')
+      table.boolean('is_admin').notNullable().defaultTo('false')
     })
   }
 

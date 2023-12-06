@@ -1,5 +1,9 @@
 @baseUrl = http://localhost:3333
 
+### GET all nursery
+GET {{baseUrl}}/creches
+Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
+
 ### Create one nursery
 POST {{baseUrl}}/creches
 Content-Type: application/json
@@ -14,7 +18,7 @@ Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2G
 ### add product quantity to nursery
 POST {{baseUrl}}/creches/5
 Content-Type: application/json
-Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2Gu5tgp
+Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
 
 {
     "nombreCaisseLingeS": 4,

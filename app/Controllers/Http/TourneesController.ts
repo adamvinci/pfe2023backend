@@ -3,6 +3,7 @@ import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
 import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
+import UpdateCommandValidator from 'App/Validators/Tournee/UpdateCommandValidator';
 
 import { DateTime } from 'luxon';
 
@@ -25,11 +26,11 @@ export default class TourneesController {
     }
 
     // uptade isDelivered to true if not already true and if the delivery is assigned to this user
-    public async updateState({ params, response, auth }: HttpContextContract) {
+    public async updateCommandStateAndQuantity({ params, request, response, auth }: HttpContextContract) {
         const userId = auth.user!
 
         const deliveryId = params.id
-
+        const payload = await request.validate(UpdateCommandValidator)
         // Check if this delivery is assigned to this user
         const delivery = await Tournee.query()
             .where('id_tournee', deliveryId)
@@ -47,13 +48,11 @@ export default class TourneesController {
 
         // Update the state
         delivery.isDelivered = true;
-        await delivery.save()
+
+        await delivery.merge(payload).save();
 
         return response.ok({ delivery })
     }
-    /* public async uptadeDeliveredQuantity({ params, request, response }: HttpContextContract) {
- 
-     }*/
 
     public async assignDelivery({ params, response, }: HttpContextContract) {
 
@@ -69,7 +68,7 @@ export default class TourneesController {
         if (delivery == null) {
             //create for each two days depending on creche.jourdelivrasion 
 
-            response.ok({ message: "The delivery for this nursery have been created" })
+            return response.ok({ message: "The delivery for this nursery have been created" })
         } else {
             //replace the user_id in tournee by the new deliveryMan
 
