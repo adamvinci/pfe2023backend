@@ -1,22 +1,15 @@
 @baseUrl = http://localhost:3333
 
-###
-POST {{baseUrl}}/users/livreurs
 
-Content-Type: application/json
-Authorization: Bearer MjI.Hs9YqhHoeHQzNgzrNIDwtSKDc3GYSdxHswevnBfEa4KCDpA4CQr_pILhH1Qe
-
-{
-    "email":"patatos@hotmail.com",
-    "password":"71password"
-}
-
-###
+### get all users
 GET {{baseUrl}}/users/livreurs
-
 Content-Type: application/json
+Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxcQ
 
-###
-GET {{baseUrl}}/users
 
+### get all users with non-admin token
+GET {{baseUrl}}/users/livreurs
 Content-Type: application/json
+Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxc
+
+

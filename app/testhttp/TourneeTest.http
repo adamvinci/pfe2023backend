@@ -2,7 +2,7 @@
 
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer Mw.C6oLUSpYqhrb3uTPiHqv-dRh1NWg53EBO35FNJwELTXiZ_CNslfsTnPoqNlj
+Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2Gu5tgp
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
@@ -11,15 +11,42 @@ Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJ
 ### update not assigned delivery 
 PUT  {{baseUrl}}/tournees/updateState/1 
 Content-Type: application/json
-Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
+Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
+
+{
+    "nombreCaisseGantLivre": 5,
+    "nombreCaisseSacPoubelleLivre":5,
+    "nombreCaisseInsertLivre": 5,
+    "nombreCaisseLingeLLivre": 5,
+    "nombreCaisseLingeMLivre": 5,
+    "nombreCaisseLingeSLivre": 5
+}
 
 ### update assigned  delivery
 PUT  {{baseUrl}}/tournees/updateState/2 
 Content-Type: application/json
-Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
+Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
+
+{
+    "nombreCaisseGantLivre": 5,
+    "nombreCaisseSacPoubelleLivre":5,
+    "nombreCaisseInsertLivre": 5,
+    "nombreCaisseLingeLLivre": 5,
+    "nombreCaisseLingeMLivre": 5,
+    "nombreCaisseLingeSLivre": 5
+}
 
 
 ### update already delivered delivery
 PUT  {{baseUrl}}/tournees/updateState/2 
 Content-Type: application/json
-Authorization: Bearer Mg.EG2WQM4c0flDiHigzQk041UTHphIrN2OsTxFSp89MTEYBO27TUQYNaJrJ8tU
+Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
+
+{
+    "nombreCaisseGantLivre": 5,
+    "nombreCaisseSacPoubelleLivre":5,
+    "nombreCaisseInsertLivre": 5,
+    "nombreCaisseLingeLLivre": 5,
+    "nombreCaisseLingeMLivre": 5,
+    "nombreCaisseLingeSLivre": 5
+}

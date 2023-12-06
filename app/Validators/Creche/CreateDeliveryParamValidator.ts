@@ -1,4 +1,4 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class CreateDeliveryParamValidator {
@@ -24,7 +24,7 @@ export default class CreateDeliveryParamValidator {
    *    ```
    */
   public schema = schema.create({
-    idCreche: schema.number(),
+    idCreche: schema.number([rules.unsigned()]),
   })
 
   /**
