@@ -19,11 +19,9 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import Database from '@ioc:Adonis/Lucid/Database'
 
 Route.get('/', async () => {
-  const products = await Database.from('creches').select('*');
-  return { hello: 'helloo', products }
+  return { hello: 'hello' }
 })
 
 //AuthController

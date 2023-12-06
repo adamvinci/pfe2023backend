@@ -2,7 +2,7 @@
 
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
+Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
@@ -24,7 +24,7 @@ Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKn
 ### update assigned  delivery
 PUT  {{baseUrl}}/tournees/updateState/2 
 Content-Type: application/json
-Authorization: Bearer OA.Pido16BeYyO0VmwylH0Nc_qva-ylk1MZwo-JkchrrLdfyiYbJkr-0ri2nAH5
+Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEWeOPOD
 
 {
     "nombreCaisseGantLivre": 5,
