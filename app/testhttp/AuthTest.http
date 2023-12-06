@@ -1,4 +1,4 @@
-@baseUrl = https://pfe-2023-backend-prod.azurewebsites.net 
+@baseUrl = http://localhost:3333
 
 ###
 POST {{baseUrl}}/auth/login
@@ -11,7 +11,7 @@ Content-Type: application/json
 ### register livreur with admin token
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer MjE.B8HIYIDAOV01-EvfozO5ZntdvpUrASROH9Px2AMNXzwIyFxLSWsnQg7WWBay
+Authorization: Bearer Mw.Z_rqqPK-5UOn1KCBdMTk5BP6heJMYeVGKvO_lCL26xu-Vfj3r9wkx2GGJXmN
 
 {
     "email": "livreur1@hotmail.com",
@@ -30,7 +30,7 @@ Content-Type: application/json
 ### register livreur with user token (403)
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer MjI.rXgaHBCPlp-EQY6tIlRXGVSkPkLapIxfDuTl-GLJGu3ahp1daqapQpfhuYN3
+Authorization: Bearer NQ.8Ossg8SiJVyRaG9SxNJHOPOS5FRz0CBXq8zPZ_4roR_iAHgF_zjXfIEA0tek
 
 {
     "email": "livreur1@hotmail.com",

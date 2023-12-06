@@ -7,7 +7,7 @@ export default class CheckUserRole {
     // Get the user
     const user = auth.user!
     // Check if the user has the 'admin' role
-    if (user.role !== 'admin') {
+    if (!user.$extras.isAdmin) {
       return response.unauthorized({ error: 'Insufficient permissions' })
     }
 

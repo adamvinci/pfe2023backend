@@ -25,5 +25,9 @@ Route.get('/', async () => {
   const products = await Database.from('beds').select('*');
   return { hello: 'testt', products }
 })
+//AuthController
 Route.post('/auth/login', 'AuthController.login')
 Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
+
+//TourneeController
+Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
