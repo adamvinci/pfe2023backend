@@ -6,13 +6,10 @@ GET {{baseUrl}}/users/livreurs
 Content-Type: application/json
 Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxcQ
 
-###
-POST {{baseUrl}}/users/livreurs
-Content-Type: application/json
-Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxcQ
 
-{
-    "email":"patatos@hotmail.com",
-    "password":"71password"
-}
+### get all users with non-admin token
+GET {{baseUrl}}/users/livreurs
+Content-Type: application/json
+Authorization: Bearer MTE.2Be-WYRov7pp6jBci6NkKvoy3KrT8ufaVYGwH7Lbnj55wEKW_nvN8LwJBxc
+
 
