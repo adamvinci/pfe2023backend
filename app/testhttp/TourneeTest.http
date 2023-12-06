@@ -1,0 +1,9 @@
+@baseUrl = http://localhost:3333
+
+### get all with admin token
+GET  {{baseUrl}}/tournees
+Authorization: Bearer MQ.FPl5RsoVKdBrI5YSYd5-gAzJiuVvJnbJmNef3ZwOOq1JbHV6sBPGy7o6yxrd
+
+### get all with user 2 token
+GET  {{baseUrl}}/tournees
+Authorization: Bearer Mg.T7ZZvPJSFSMheRF1M8Mcq4FqfOfRLEb0Egs_5SMKUJ3fdZ1mmLLVviXOIPSc

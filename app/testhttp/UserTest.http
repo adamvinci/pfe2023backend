@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:3333
+
+###
+POST {{baseUrl}}/users/livreurs
+
+Content-Type: application/json
+Authorization: Bearer MjI.Hs9YqhHoeHQzNgzrNIDwtSKDc3GYSdxHswevnBfEa4KCDpA4CQr_pILhH1Qe
+
+{
+    "email":"patatos@hotmail.com",
+    "password":"71password"
+}
+
+###
+GET {{baseUrl}}/users/livreurs
+
+Content-Type: application/json
+
+###
+GET {{baseUrl}}/users
+
+Content-Type: application/json

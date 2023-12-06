@@ -1,6 +1,7 @@
 
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
+import Tournee from './Tournee'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -13,7 +14,10 @@ export default class User extends BaseModel {
   public password: string
 
   @column()
-  public isAdmin: boolean
+  public is_admin: boolean
+
+  @hasMany(() => Tournee)
+  public tournees: HasMany<typeof Tournee>
 
   @beforeSave()
   public static async hashPassword(user: User) {

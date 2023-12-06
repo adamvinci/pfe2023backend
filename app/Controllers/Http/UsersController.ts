@@ -7,50 +7,24 @@ export default class UserController {
     const users = await User.all()
     return response.status(200).json(users)
   }
+
   public async listLivreurs({ response }: HttpContextContract) {
-    const list = {"hello":"shesh"}
+    const list = await User.query().where('isAdmin', false).select(['id', 'email'])
     return response.status(200).json(list)
   }
 
-  public async show({ params, response }: HttpContextContract) {
-    const user = await User.find(params.id)
-    if (!user) {
-      return response.status(404).json({ message: 'Utilisateur non trouvé' })
-    }
-    return response.status(200).json(user)
-  }
-
-  public async update({ params, request, response }: HttpContextContract) {
-    const user = await User.find(params.id)
-    if (!user) {
-      return response.status(404).json({ message: 'Utilisateur non trouvé' })
-    }
-    const userData = request.only(['nom', 'prenom', 'email', 'password', 'role'])
-    user.merge(userData)
-    await user.save()
-    return response.status(200).json(user)
-  }
-
-  public async destroy({ params, response }: HttpContextContract) {
-    const user = await User.find(params.id)
-    if (!user) {
-      return response.status(404).json({ message: 'Utilisateur non trouvé' })
-    }
-    await user.delete()
-    return response.status(204)
-  }
-
   public async addLivreur({ request, response }: HttpContextContract) {
-    const userData = request.only(['email', 'password','isAdmin'])
-    userData.isAdmin = false
+    const userData = request.only(['email', 'password', 'is_admin'])
+  
     const user = new User()
     user.email = userData.email
     user.password = userData.password
-    user.isAdmin = userData.isAdmin
-
+    user.is_admin = userData.is_admin ?? false // Par défaut, un livreur n'est pas un admin s'il n'y a pas de valeur fournie
+  
     await user.save()
     return response.status(201).json(user)
   }
+  
 
   
   
