@@ -31,5 +31,6 @@ Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
 
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
-Route.post('/tournees', 'TourneesController.assignDelivery').middleware('isAdmin')
+Route.post('/tournees/:idCreche/:idDeliveryMan', 'TourneesController.assignDelivery').middleware('isAdmin')
+Route.post('/tournees/:idCreche', 'TourneesController.createDelivery').middleware('isAdmin')
 Route.put('/tournees/updateState/:id', 'TourneesController.updateState').middleware('auth')

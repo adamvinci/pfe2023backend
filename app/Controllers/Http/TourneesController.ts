@@ -1,6 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
+import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
+import CreateDeliveryValidatorRequest from 'App/Validators/Tournee/CreateDeliveryValidatorRequest';
+import CreateDeliveryValidatorParam from 'App/Validators/Tournee/CreateDeliveryParamValidator';
 import { DateTime } from 'luxon';
 
 export default class TourneesController {
@@ -49,9 +53,35 @@ export default class TourneesController {
         return response.ok({ delivery })
     }
 
-    /*public async assignDelivery({ request, response, }: HttpContextContract) {
+    public async assignDelivery({ params, response, }: HttpContextContract) {
 
-    }*/
+        const { idCreche, idDeliveryMan } = await params.validate(AssignDeliveryValidator);
+        const creche = Creche.find(idCreche);
+        const deliveryMan = User.find(idDeliveryMan);
+        if (creche == null || deliveryMan == null) {
+            response.notFound({ message: 'DeliveryMan or nursery id does not exist' })
+        }
+        const delivery = await Tournee.query()
+            .where('creche_id', idCreche)
+
+        if (delivery == null) {
+            //create for each two days depending on creche.jourdelivrasion 
+
+            response.ok({ message: "The delivery for this nursery have been created" })
+        } else {
+            //replace the user_id in tournee by the new deliveryMan
+
+            response.ok({ message: "The delivery man has been updated" })
+        }
+
+    }
+
+    public async createDelivery({ params, request, response, }: HttpContextContract) {
+        const { idCreche } = await params.validate(CreateDeliveryValidatorParam);
+        const payload = await request.validate(CreateDeliveryValidatorRequest);
+        //init les date dans la db 
+        await Tournee.create(payload)
+    }
 }
 
 
