@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon'
 import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Tournee from './Tournee'
 
