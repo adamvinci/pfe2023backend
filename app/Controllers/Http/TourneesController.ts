@@ -60,7 +60,7 @@ export default class TourneesController {
         const creche = Creche.find(idCreche);
         const deliveryMan = User.find(idDeliveryMan);
         if (creche == null || deliveryMan == null) {
-            response.notFound({ message: 'DeliveryMan or nursery id does not exist' })
+            response.notFound({ message: 'DeliveryMan or nursery id does not exist ' })
         }
         const delivery = await Tournee.query()
             .where('creche_id', idCreche)
