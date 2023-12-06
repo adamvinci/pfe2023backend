@@ -1,8 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
-import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
 import UpdateCommandValidator from 'App/Validators/Tournee/UpdateCommandValidator';
 
 import { DateTime } from 'luxon';
