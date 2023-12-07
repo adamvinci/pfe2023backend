@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3333
+@baseUrl = https://pfe-2023-backend-dev.azurewebsites.net
 
 ### login admin
 POST {{baseUrl}}/auth/login

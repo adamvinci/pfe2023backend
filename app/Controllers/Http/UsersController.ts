@@ -5,7 +5,8 @@ import User from 'App/Models/User'
 export default class UserController {
 
   public async listLivreurs({ response }: HttpContextContract) {
-    const livreurs = await User.query().where('is_admin', false).select(['id', 'email'])
+    console.log("de")
+    const livreurs = await User.query().where('is_admin', false).select(['id', 'nom'])
     if (livreurs == null) return response.noContent();
     return response.ok(livreurs)
   }

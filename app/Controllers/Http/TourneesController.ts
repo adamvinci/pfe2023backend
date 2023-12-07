@@ -4,6 +4,7 @@ import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
 import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
 import CreateValidator from 'App/Validators/Tournee/CreateValidator';
+import UpdateCommandValidator from 'App/Validators/Tournee/UpdateCommandValidator';
 
 
 
@@ -61,14 +62,13 @@ export default class TourneesController {
         return response.ok(tourneesByUser)
     }
 
-    /*// update isDelivered to true if not already true and if the delivery is assigned to this user
-    public async updateTourneeQuantity({ params, request, response, auth }: HttpContextContract) {
+    // update isDelivered to true if not already true and if the delivery is assigned to this user
+    public async updateDeliveryQuantity({ request, response, auth }: HttpContextContract) {
         const userId = auth.user!
 
-        const nurseryId = params.
-        
-        const deliveryId = params.id
         const payload = await request.validate(UpdateCommandValidator)
+        const { nurseryId } = payload
+        const { deliveryId } = payload;
         // Check if this delivery is assigned to this user
         const delivery = await Tournee.query()
             .where('id_tournee', deliveryId)
@@ -76,21 +76,46 @@ export default class TourneesController {
             .first()
 
         if (delivery == null) {
-            return response.notFound({ message: 'This delivery is not assigned to this delivery man' });
+            return response.notFound({ message: 'You cannot update this delivery' });
         }
 
-        // Check if the tournee has already been delivered
-        if (delivery.isDelivered) {
+        const creche = await Creche.findBy('tourneeId', delivery.id)
+
+        if (!creche) {
+            return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
+        }
+
+        if (creche.isDelivered) {
             return response.badRequest({ message: 'Tournee has already been delivered' })
         }
 
-        // Update the state
-        delivery.isDelivered = true;
+        //Uptade remaining quantity in delivery
+        const { nombreCaisseGantLivre, nombreCaisseSacPoubelleLivre, nombreCaisseInsertLivre,
+            nombreCaisseLingeLLivre, nombreCaisseLingeMLivre, nombreCaisseLingeSLivre } = payload
+        const diffNombreCaisseGant = nombreCaisseGantLivre - creche.nombreCaisseGant;
+        const diffNombreCaisseSacPoubelle = nombreCaisseSacPoubelleLivre - creche.nombreCaisseSacPoubelle;
+        const diffNombreCaisseInsert = nombreCaisseInsertLivre - creche.nombreCaisseInsert;
+        const diffNombreCaisseLingeL = nombreCaisseLingeLLivre - creche.nombreCaisseLingeL;
+        const diffNombreCaisseLingeM = nombreCaisseLingeMLivre - creche.nombreCaisseLingeM;
+        const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
-        await delivery.merge(payload).save();
+        // Update nombreCaisseRestante based on the differences
+        delivery.nombreCaisseGantRestante += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleRestante += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertRestante += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLRestante += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMRestante += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSRestante += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
+
+
+        // Update the state and quantity
+        await delivery.save();
+        creche.isDelivered = true;
+        await creche.save();
+
 
         return response.ok({ delivery })
-    }*/
+    }
 
 
 

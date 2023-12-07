@@ -7,26 +7,26 @@ export default class Tournee extends BaseModel {
   public id: number
 
   @column()
-  public nombreCaisseLingeSRestante?: number
+  public nombreCaisseLingeSRestante: number
 
   @column()
-  public nombreCaisseLingeMRestante?: number
+  public nombreCaisseLingeMRestante: number
 
   @column()
-  public nombreCaisseLingeLRestante?: number
+  public nombreCaisseLingeLRestante: number
 
 
   @column()
-  public nombreCaisseInsertRestante?: number
+  public nombreCaisseInsertRestante: number
 
   @column()
-  public nombreCaisseSacPoubelleRestante?: number
+  public nombreCaisseSacPoubelleRestante: number
 
   @column()
-  public nombreCaisseGantRestante?: number
+  public nombreCaisseGantRestante: number
 
   @column()
-  public pourcentageSupplementaire?: number
+  public pourcentageSupplementaire: number
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>

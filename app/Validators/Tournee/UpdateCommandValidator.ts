@@ -30,6 +30,8 @@ export default class UpdateCommandValidator {
     nombreCaisseLingeLLivre: schema.number([rules.unsigned()]),
     nombreCaisseLingeMLivre: schema.number([rules.unsigned()]),
     nombreCaisseLingeSLivre: schema.number([rules.unsigned()]),
+    nurseryId: schema.number([rules.unsigned(), rules.exists({ table: 'creches', column: 'id' })]),
+    deliveryId: schema.number([rules.unsigned(), rules.exists({ table: 'tournees', column: 'id' })]),
   })
 
   /**

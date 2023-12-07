@@ -28,12 +28,12 @@ Route.get('/', async () => {
 Route.post('/auth/login', 'AuthController.login')
 Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
 Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('isAdmin')
-Route.get('/auth/resetPasswordAdmin', 'AuthController.resetPasswordAdmin').middleware('isAdmin')
+Route.get('/auth/resetPasswordAdmin', 'AuthController.resetPasswordAdmin').middleware('isAdmin') // todo
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
 Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin')
 Route.post('/tournees/assignDelivery', 'TourneesController.chooseDelivery').middleware('auth')
-Route.put('/tournees/updateState/:id', 'TourneesController.updateCommandStateAndQuantity').middleware('auth')
+Route.put('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth') //todo
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin')
