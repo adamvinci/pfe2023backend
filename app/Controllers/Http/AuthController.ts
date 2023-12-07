@@ -34,10 +34,10 @@ export default class AuthController {
     }
 
     // Admin can change password of user and his password
-    public async resetPasswordAdmin({ response }: HttpContextContract) {
-
-        const user = await User.findBy('is_admin', true);
-        console.log(user)
-
-    }
+    /* public async resetPasswordAdmin({ response }: HttpContextContract) {
+ 
+         const user = await User.findBy('is_admin', true);
+         console.log(user)
+ 
+     }*/
 }

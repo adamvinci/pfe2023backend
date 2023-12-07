@@ -25,7 +25,7 @@ export default class StoreUserValidator {
    */
   public schema = schema.create({
     nom: schema.string([rules.unique({ table: 'users', column: 'nom' }),]),
-    password: schema.string(),
+    password: schema.string([rules.minLength(5)]),
   })
 
   /**

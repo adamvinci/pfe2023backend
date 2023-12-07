@@ -25,7 +25,7 @@ export default class ChangePasswordValidator {
    */
   public schema = schema.create({
     idUser: schema.string([rules.exists({ table: 'users', column: 'id' }),]),
-    password: schema.string(),
+    password: schema.string([rules.minLength(5)]),
   })
 
   /**

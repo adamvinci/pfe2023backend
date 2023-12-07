@@ -10,8 +10,7 @@ export default class CrechesController {
     }
     public async createOne({ request, response, }: HttpContextContract) {
         const payload = await request.validate(CreateValidator)
-        const creche = await Creche.findBy('adresse', payload.adresse);
-        if (creche) return response.conflict({ message: "nursery adress must be unique" });
+
         const newCreche = await Creche.create(payload)
 
         return response.created(newCreche) // 201 CREATED
