@@ -17,7 +17,6 @@ export default class AuthController {
         const { nom, password } = await request.validate(LoginValidator)
 
         const token = await auth.attempt(nom, password)
-        console.log(token)
 
         return response.ok(token)
     }
