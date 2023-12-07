@@ -80,12 +80,14 @@ export default class TourneesController {
         }
 
         const creche = await Creche.find(nurseryId)
-
-        if (creche && (creche.tourneeId !== deliveryId)) {
+        if (creche === null) {
+            return response.badRequest({ message: 'This nursery does not exist' })
+        }
+        if (creche.tourneeId !== deliveryId) {
             return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
         }
 
-        if (creche && creche.isDelivered) {
+        if (creche.isDelivered) {
             return response.badRequest({ message: 'Tournee has already been delivered' })
         }
 
