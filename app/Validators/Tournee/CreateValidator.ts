@@ -1,7 +1,24 @@
-import { schema, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 
+
+
+/*//verify if these nursery are not already assigned to a delivery work sometimes
+validator.rule('nurseryAlreadyAssigned', async (value, _, { pointer, errorReporter, arrayExpressionPointer }) => {
+    const crechesWithTournee = await Creche.query().whereNotNull('tournee_id');
+    crechesWithTournee.forEach((creche) => {
+        if (value === creche.$attributes.id) {
+            console.log("assigned")
+            errorReporter.report(
+                pointer,
+                'nurseryAlreadyAssigned',
+                `This nursery is already associated with a tournee: ${creche.$attributes.nom}`,
+                arrayExpressionPointer
+            )
+        }
+    });
+})*/
 export default class CreateValidator {
   constructor(protected ctx: HttpContextContract) { }
 
@@ -24,11 +41,9 @@ export default class CreateValidator {
    *     ])
    *    ```
    */
+
   public schema = schema.create({
-    nom: schema.string(),
-    adresse: schema.string(),
-    gsm: schema.string(),
-    ville: schema.string()
+    creches: schema.array().members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
   })
 
   /**

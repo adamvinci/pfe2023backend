@@ -5,17 +5,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email":"admin@hotmail.com",
+    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter",
     "password":"71password"
-}
-### register livreur with admin token
-POST {{baseUrl}}/auth/register 
-Content-type: application/json
-Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2Gu5tgp 
-
-{
-    "email": "livreur1@hotmail.com",
-    "password": "livreur1"
 }
 
 ### login livreur
@@ -23,22 +14,81 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email":"livreur1@hotmail.com",
+    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter2",
     "password":"livreur1"
+}
+
+### register livreur with admin token
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+
+{
+    "nom": "hahatudoisecriretoutcadansleloginpourteconnecter3",
+    "password": "livreur2"
+}
+
+### register same livreur with admin token
+POST {{baseUrl}}/auth/register 
+Content-type: application/json
+Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+
+{
+    "nom": "hahatudoisecriretoutcadansleloginpourteconnecter3",
+    "password": "livreur2"
 }
 
 ### register livreur with user token (403)
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer NQ.8Ossg8SiJVyRaG9SxNJHOPOS5FRz0CBXq8zPZ_4roR_iAHgF_zjXfIEA0tek
+Authorization: Bearer Mg.AQ1QFjKTND98QLsfCCKr1zmjRYN6t2mYL7BUNg3PUBIhXWxICmKEyf5N-Ej1
 
 {
-    "email": "livreur1@hotmail.com",
+    "nom": "livreur1@hotmail.com",
     "password": "livreur1"
 }
 
+### Change user password with user token
+POST {{baseUrl}}/auth/updatePassword 
+Content-type: application/json
+Authorization: Bearer Mg.AQ1QFjKTND98QLsfCCKr1zmjRYN6t2mYL7BUNg3PUBIhXWxICmKEyf5N-Ej1
+
+{
+    "idUser": "2",
+    "password": "livreur2"
+}
+
+### Change user password with admin token
+POST {{baseUrl}}/auth/updatePassword 
+Content-type: application/json
+Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+
+{
+    "idUser": "2",
+    "password": "livreur2"
+}
 
 
+### try to connect with old password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter2",
+    "password":"livreur1"
+}
+
+### try to connect with new password
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter2",
+    "password":"livreur2"
+}
+
+### reset password admin
+GET {{baseUrl}}/auth/resetPasswordAdmin
 // ****************************Badrequest/conflit/notfoundtest*/////////////////////////// */
 
 ### 

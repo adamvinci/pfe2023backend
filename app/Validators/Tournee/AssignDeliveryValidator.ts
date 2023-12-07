@@ -1,6 +1,22 @@
 import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+import { validator } from '@ioc:Adonis/Core/Validator'
+import User from 'App/Models/User'
+
+//verify if the user is admin
+validator.rule('isNotAdmin', async (value, _, { pointer, errorReporter }) => {
+  const user = await User.find(value);
+  if (user && user.isAdmin) {
+    errorReporter.report(
+      pointer,
+      'notAssignable',
+      `This user cannot be assigned to a delivery`
+    )
+  }
+
+})
+
 export default class AssignDeliveryValidator {
   constructor(protected ctx: HttpContextContract) { }
 
@@ -24,8 +40,8 @@ export default class AssignDeliveryValidator {
    *    ```
    */
   public schema = schema.create({
-    idCreche: schema.number([rules.unsigned()]),
-    idDeliveryMan: schema.number([rules.unsigned()]),
+    idDelivery: schema.number([rules.unsigned(), rules.exists({ table: 'tournees', column: 'id' })]),
+    idDeliveryMan: schema.number([rules.unsigned(), rules.exists({ table: 'users', column: 'id' }), rules.isNotAdmin()]),
   })
 
   /**

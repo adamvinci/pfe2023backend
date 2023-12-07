@@ -5,18 +5,15 @@ export default class extends BaseSchema {
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id_tournee').primary()
-      table.integer('user_id').unsigned().notNullable().references('users.id').onDelete('CASCADE')
-      table.integer('creche_id').unsigned().notNullable().references('creches.id').onDelete('CASCADE')
-      table.date('date').notNullable()
-      table.integer('nombre_caisse_linge_s_livre').notNullable()
-      table.integer('nombre_caisse_linge_m_livre').notNullable()
-      table.integer('nombre_caisse_linge_l_livre').notNullable()
-      table.integer('nombre_caisse_insert_livre').notNullable()
-      table.integer('nombre_caisse_sac_poubelle_livre').notNullable()
-      table.integer('nombre_caisse_gant_livre').nullable()
-      table.boolean('is_delivered').notNullable().defaultTo('false')
-      table.unique(['user_id', 'creche_id', 'date'])
+      table.increments('id').primary()
+      table.integer('user_id').unsigned().nullable().references('users.id').onDelete('CASCADE')
+      table.integer('nombre_caisse_linge_s_restante').notNullable().defaultTo(0)
+      table.integer('nombre_caisse_linge_m_restante').notNullable().defaultTo(0)
+      table.integer('nombre_caisse_linge_l_restante').notNullable().defaultTo(0)
+      table.integer('nombre_caisse_insert_restante').notNullable().defaultTo(0)
+      table.integer('nombre_caisse_sac_poubelle_restante').notNullable().defaultTo(0)
+      table.integer('nombre_caisse_gant_restante').nullable().defaultTo(0)
+      table.integer('pourcentage_supplementaire').notNullable().defaultTo(10)
     })
   }
 

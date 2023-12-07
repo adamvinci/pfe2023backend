@@ -1,4 +1,4 @@
-import { BaseModel, HasMany, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Tournee from './Tournee'
 
 export default class Creche extends BaseModel {
@@ -12,25 +12,34 @@ export default class Creche extends BaseModel {
   public adresse: string
 
   @column()
+  public ville: string
+
+  @column()
   public gsm: string
 
-  @hasMany(() => Tournee)
-  public tournees: HasMany<typeof Tournee>
+  @column()
+  public nombreCaisseInsert: number
 
   @column()
-  public nombreCaisseInsert?: number
+  public nombreCaisseSacPoubelle: number
 
   @column()
-  public nombreCaisseSacPoubelle?: number
+  public nombreCaisseGant: number
+  @column()
+  public nombreCaisseLingeS: number
 
   @column()
-  public nombreCaisseGant?: number
-  @column()
-  public nombreCaisseLingeS?: number
+  public nombreCaisseLingeM: number
 
   @column()
-  public nombreCaisseLingeM?: number
+  public nombreCaisseLingeL: number
+
+  @belongsTo(() => Tournee)
+  public tournee: BelongsTo<typeof Tournee>
 
   @column()
-  public nombreCaisseLingeL?: number
+  public tourneeId: number
+
+  @column()
+  public isDelivered: boolean
 }

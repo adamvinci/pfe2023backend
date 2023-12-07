@@ -3,32 +3,70 @@ import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import User from 'App/Models/User';
 import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
-import UpdateCommandValidator from 'App/Validators/Tournee/UpdateCommandValidator';
+import CreateValidator from 'App/Validators/Tournee/CreateValidator';
 
-import { DateTime } from 'luxon';
+
 
 export default class TourneesController {
 
+    // create a tournee and assign the tournee to the nursery
+    public async createOne({ request, response }: HttpContextContract) {
+
+        const payload = await request.validate(CreateValidator);
+
+        //verify if these nursery are not already assigned to a delivery
+        const crechesWithTournee = await Creche.query().whereNotNull('tournee_id');
+        const invalidCrecheIds: string[] = [];
+        crechesWithTournee.forEach((creche) => {
+            const foundCreche = payload.creches.find((crecheId) => crecheId === creche.$attributes.id);
+
+            if (foundCreche) {
+                invalidCrecheIds.push(creche.$attributes.nom);
+            }
+        });
+        if (invalidCrecheIds.length > 0) {
+            return response.badRequest({
+                message: `The following creches are already associated with a tournee: ${invalidCrecheIds.join(', ')}`,
+            });
+        }
+
+        //create tournee with delivery man
+        const tournee = new Tournee();
+        await tournee.save();
+        const tourneeId = tournee.$attributes.id
+
+        //assign tourneesid to nursery
+        const { creches } = payload;
+        creches.forEach(async (id) => {
+            const creche = await Creche.find(id);
+            if (creche) {
+                creche.tourneeId = tourneeId;
+            }
+            await creche?.save();
+        })
+        const createdTournee = await Tournee.query().where('id', tourneeId).preload('user').preload('creches')
+        return response.ok({ createdTournee })
+    }
 
     // Send All the delivery if the token belongs to the admin , if the token belongs to a delivering man it send all its delivery for today
     public async getAll({ auth, response }: HttpContextContract) {
         const user = auth.user!
         if (user.$extras.isAdmin) {
-            const tasks = await Tournee.query().preload('users').preload('creches');
-            return response.ok(tasks)
+            const tournees = await Tournee.query().preload('user').preload('creches');
+            return response.ok(tournees)
         }
-        const tasks = await User.query().where('id', user.id).preload('tournees', (query) => {
-            const today = DateTime.local().toFormat('yyyy-MM-dd');
-            query.where('date', today).preload('creches');
+        const tourneesByUser = await User.query().where('id', user.id).preload('tournees', (query) => {
+            query.preload('creches');
         });
-        // const tasks = await Tournee.query().where('userId', user.id).preload('users').preload('creches');
-        return response.ok(tasks)
+        return response.ok(tourneesByUser)
     }
 
-    // update isDelivered to true if not already true and if the delivery is assigned to this user
-    public async updateCommandStateAndQuantity({ params, request, response, auth }: HttpContextContract) {
+    /*// update isDelivered to true if not already true and if the delivery is assigned to this user
+    public async updateTourneeQuantity({ params, request, response, auth }: HttpContextContract) {
         const userId = auth.user!
 
+        const nurseryId = params.
+        
         const deliveryId = params.id
         const payload = await request.validate(UpdateCommandValidator)
         // Check if this delivery is assigned to this user
@@ -52,29 +90,28 @@ export default class TourneesController {
         await delivery.merge(payload).save();
 
         return response.ok({ delivery })
-    }
+    }*/
 
-    public async assignDelivery({ params, response, }: HttpContextContract) {
 
-        const { idCreche, idDeliveryMan } = await params.validate(AssignDeliveryValidator);
-        const creche = Creche.find(idCreche);
-        const deliveryMan = User.find(idDeliveryMan);
-        if (creche == null || deliveryMan == null) {
-            response.notFound({ message: 'DeliveryMan or nursery id does not exist' })
-        }
-        const delivery = await Tournee.query()
-            .where('creche_id', idCreche)
 
-        if (delivery == null) {
-            //create for each two days depending on creche.jourdelivrasion 
+    public async chooseDelivery({ auth, request, response, }: HttpContextContract) {
 
-            return response.ok({ message: "The delivery for this nursery have been created" })
+        const { idDelivery, idDeliveryMan } = await request.validate(AssignDeliveryValidator);
+
+        if (auth.user?.id !== idDeliveryMan) return response.badRequest({ message: "You cant assign someone else than yourself" })
+        if (auth.user?.isAdmin) return response.badRequest({ message: "This user cant delivery" })
+
+        const delivery = await Tournee.find(idDelivery);
+        if (delivery && !delivery.userId) {
+            delivery.userId = idDeliveryMan;
+            await delivery.save();
+            return response.ok({ message: "You have been assigned to this delivery" })
         } else {
-            //replace the user_id in tournee by the new deliveryMan
-
-            response.ok({ message: "The delivery man has been updated" })
+            if (delivery?.userId == auth.user.id) {
+                return response.ok({ message: "You have already been added to this delivery" })
+            }
+            return response.conflict({ message: "Someone else took over this delivery" })
         }
-
     }
 
 

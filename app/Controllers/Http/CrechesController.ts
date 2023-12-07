@@ -10,12 +10,13 @@ export default class CrechesController {
     }
     public async createOne({ request, response, }: HttpContextContract) {
         const payload = await request.validate(CreateValidator)
+        const creche = await Creche.findBy('adresse', payload.adresse);
+        if (creche) return response.conflict({ message: "nursery adress must be unique" });
+        const newCreche = await Creche.create(payload)
 
-        const creche = await Creche.create(payload)
-
-        return response.created(creche) // 201 CREATED
+        return response.created(newCreche) // 201 CREATED
     }
-    public async updateCommand({ params, request, response, }: HttpContextContract) {
+    public async addNurseryCommand({ params, request, response, }: HttpContextContract) {
         const idCreche = params.idCreche;
         const payload = await request.validate(CreateDeliveryValidatorRequest);
 
@@ -33,4 +34,6 @@ export default class CrechesController {
         creche.delete()
         return response.ok({ message: "Creche deleted" });
     }
+
+
 }

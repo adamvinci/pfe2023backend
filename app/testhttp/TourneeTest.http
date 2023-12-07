@@ -1,12 +1,72 @@
 @baseUrl = http://localhost:3333
 
+
+### Create delivery 
+POST {{baseUrl}}/tournees
+Content-Type: application/json
+Authorization: Bearer MQ.bbGB-iJ2DvbVjBffKETngcRjPWsMkgtGOkc__aCFEpbZd64s7zDBmhhNztC2
+
+{
+    "creches":[1,3]
+}
+
+### Assign delivery to someone else
+POST {{baseUrl}}/tournees/assignDelivery
+Content-Type: application/json
+Authorization: Bearer MQ.bbGB-iJ2DvbVjBffKETngcRjPWsMkgtGOkc__aCFEpbZd64s7zDBmhhNztC2
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":2
+}
+
+### Assign delivery to admin
+POST {{baseUrl}}/tournees/assignDelivery
+Content-Type: application/json
+Authorization: Bearer MQ.bbGB-iJ2DvbVjBffKETngcRjPWsMkgtGOkc__aCFEpbZd64s7zDBmhhNztC2
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":1
+}
+
+### Assign delivery to self
+POST {{baseUrl}}/tournees/assignDelivery
+Content-Type: application/json
+Authorization: Bearer NA.eNr0Q423xufoHHK-MfVih-0xi1YWeYCvNIBL81ZCfxn5AAQDJy-16AK4rCJJ
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":2
+}
+
+### Assign delivery to self
+POST {{baseUrl}}/tournees/assignDelivery
+Content-Type: application/json
+Authorization: Bearer NA.eNr0Q423xufoHHK-MfVih-0xi1YWeYCvNIBL81ZCfxn5AAQDJy-16AK4rCJJ
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":2
+}
+
+### Assign delivery already assigned
+POST {{baseUrl}}/tournees/assignDelivery
+Content-Type: application/json
+Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_MgcDlzg
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":3
+}
+
 ### get all with admin token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
-
+Authorization: Bearer Mg.UDqwVStY_RgGpvQe6PZ7I7E86g3wmkwenkJp7Sp0rSQUeTyc_cw8I3D3laME
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
 Authorization: Bearer OA.Pido16BeYyO0VmwylH0Nc_qva-ylk1MZwo-JkchrrLdfyiYbJkr-0ri2nAH5 
+
 ### update not assigned delivery 
 PUT  {{baseUrl}}/tournees/updateState/1 
 Content-Type: application/json

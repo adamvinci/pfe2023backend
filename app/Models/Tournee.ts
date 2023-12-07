@@ -1,52 +1,41 @@
-import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
 import Creche from './Creche'
 
 export default class Tournee extends BaseModel {
   @column({ isPrimary: true })
-  public idTournee: number
+  public id: number
 
   @column()
-  public nombreCaisseLingeSLivre?: number
+  public nombreCaisseLingeSRestante?: number
 
   @column()
-  public nombreCaisseLingeMLivre?: number
+  public nombreCaisseLingeMRestante?: number
 
   @column()
-  public nombreCaisseLingeLLivre?: number
+  public nombreCaisseLingeLRestante?: number
 
 
   @column()
-  public nombreCaisseInsertLivre?: number
+  public nombreCaisseInsertRestante?: number
 
   @column()
-  public nombreCaisseSacPoubelleLivre?: number
+  public nombreCaisseSacPoubelleRestante?: number
 
   @column()
-  public nombreCaisseGantLivre?: number
+  public nombreCaisseGantRestante?: number
 
-
+  @column()
+  public pourcentageSupplementaire?: number
 
   @belongsTo(() => User)
-  public users: BelongsTo<typeof User>
+  public user: BelongsTo<typeof User>
 
   @column()
   public userId: number
 
-  @column()
-  public crecheId: number
-
-  @column()
-  public isDelivered: boolean
-
-  @column.date()
-  public date: DateTime
-
-  @belongsTo(() => Creche)
-  public creches: BelongsTo<typeof Creche>
-
-
+  @hasMany(() => Creche)
+  public creches: HasMany<typeof Creche>
 
 }
 

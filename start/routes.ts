@@ -27,16 +27,18 @@ Route.get('/', async () => {
 //AuthController
 Route.post('/auth/login', 'AuthController.login')
 Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
-
+Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('isAdmin')
+Route.get('/auth/resetPasswordAdmin', 'AuthController.resetPasswordAdmin').middleware('isAdmin')
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
-Route.post('/tournees/:idCreche/:idDeliveryMan', 'TourneesController.assignDelivery').middleware('isAdmin')
+Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin')
+Route.post('/tournees/assignDelivery', 'TourneesController.chooseDelivery').middleware('auth')
 Route.put('/tournees/updateState/:id', 'TourneesController.updateCommandStateAndQuantity').middleware('auth')
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin')
 Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin')
-Route.post('/creches/:idCreche', 'CrechesController.updateCommand').middleware('isAdmin')
+Route.post('/creches/:idCreche', 'CrechesController.addNurseryCommand').middleware('isAdmin')
 Route.delete('/creche/:id', 'CrechesController.deleteOne').middleware('isAdmin')
 
 // UserController

@@ -2,23 +2,35 @@
 
 ### GET all nursery
 GET {{baseUrl}}/creches
-Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
+Authorization: Bearer Mg.GO0AzL33mhjfdOMqXzCdrlsyosVq-Z06Ab1LcJPRYfAMqHE5HMMzTsKlOZ3M
 
 ### Create one nursery
 POST {{baseUrl}}/creches
 Content-Type: application/json
-Authorization: Bearer MQ.vAhTRxMSdHOowHcbOlQHVqhmjFCK3KcunpNP1ZxvBg2fcOIFIzDPe2Gu5tgp
+Authorization: Bearer Mg.GO0AzL33mhjfdOMqXzCdrlsyosVq-Z06Ab1LcJPRYfAMqHE5HMMzTsKlOZ3M
 
 {
     "gsm":"01",
-    "nom":"nursery1",
-    "adresse":"avenue venue"
+    "nom":"creche1",
+    "adresse":"avenue venue",
+    "ville":"bx"
 }
 
-### add product quantity to nursery
-POST {{baseUrl}}/creches/5
+### Create one nursery with already existing adresse
+POST {{baseUrl}}/creches
 Content-Type: application/json
-Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
+Authorization: Bearer Mg.GO0AzL33mhjfdOMqXzCdrlsyosVq-Z06Ab1LcJPRYfAMqHE5HMMzTsKlOZ3M
+
+{
+    "gsm":"01",
+    "nom":"creche2",
+    "adresse":"avenue venue",
+    "ville":"lv"
+}
+### add product quantity to nursery
+POST {{baseUrl}}/creches/2
+Content-Type: application/json
+Authorization: Bearer Mg.GO0AzL33mhjfdOMqXzCdrlsyosVq-Z06Ab1LcJPRYfAMqHE5HMMzTsKlOZ3M
 
 {
     "nombreCaisseLingeS": 4,
