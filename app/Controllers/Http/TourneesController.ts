@@ -79,13 +79,13 @@ export default class TourneesController {
             return response.notFound({ message: 'You cannot update this delivery' });
         }
 
-        const creche = await Creche.findBy('tourneeId', delivery.id)
+        const creche = await Creche.find(nurseryId)
 
-        if (!creche) {
+        if (creche && (creche.tourneeId !== deliveryId)) {
             return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
         }
 
-        if (creche.isDelivered) {
+        if (creche && creche.isDelivered) {
             return response.badRequest({ message: 'Tournee has already been delivered' })
         }
 
