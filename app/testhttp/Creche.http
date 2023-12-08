@@ -28,18 +28,17 @@ Authorization: Bearer NQ.EeUNBiacEgQ0RIYtdm-vrAukVwOTPSASKCAomQH9ZKxrvY2eRPsz8Y0
     "ville":"lv"
 }
 ### add product quantity to nursery
-POST {{baseUrl}}/creches/2
+POST {{baseUrl}}/creches/17
 Content-Type: application/json
-Authorization: Bearer Mg.GO0AzL33mhjfdOMqXzCdrlsyosVq-Z06Ab1LcJPRYfAMqHE5HMMzTsKlOZ3M
+Authorization: Bearer MQ.XaKtc15OUOOPsrMUqMEHR0J2Gi8_E0H8sZnM7duVtfX-PZI_LNuXMNv4qzMT
 
 {
-    "nombreCaisseLingeS": 4,
-    "nombreCaisseLingeM": 0,
+    "nombreCaisseLingeS": 0.5,
+    "nombreCaisseLingeM": 0.5,
     "nombreCaisseLingeL": 5,
     "nombreCaisseInsert": 8,
     "nombreCaisseSacPoubelle": 10,
-    "nombreCaisseGant": 7,
-    "gsm":"0456"
+    "nombreCaisseGant": 7
 }
 
 ### delete one

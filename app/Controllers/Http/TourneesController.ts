@@ -53,8 +53,10 @@ export default class TourneesController {
     // Send All the delivery if the token belongs to the admin , if the token belongs to a delivering man it send all its delivery for today
     public async getAll({ auth, response }: HttpContextContract) {
         const user = auth.user!
-        if (user.$extras.isAdmin) {
-            const tournees = await Tournee.query().preload('user').preload('creches');
+
+        if (user.$original.isAdmin) {
+            const tournees = await Tournee.query().preload('user').preload('creches')
+            console.log()
             return response.ok(tournees)
         }
         const tourneesByUser = await User.query().where('id', user.id).preload('tournees', (query) => {

@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3333
+@baseUrl = https://pfe-2023-backend-dev.azurewebsites.net/
 
 
 ### Create delivery 
@@ -62,11 +62,12 @@ Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_Mg
 }
 
 ### get all with admin token
-GET  {{baseUrl}}/tournees
-Authorization: Bearer Mg.UDqwVStY_RgGpvQe6PZ7I7E86g3wmkwenkJp7Sp0rSQUeTyc_cw8I3D3laME
+GET {{baseUrl}}/tournees
+Authorization: Bearer NA.x8V_IVBSOVtBKvEpecbjxovQnc3CoY4IuV97oOWZSS3dKupXqrj31JXfAkV0
+
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer OA.Pido16BeYyO0VmwylH0Nc_qva-ylk1MZwo-JkchrrLdfyiYbJkr-0ri2nAH5 
+Authorization: Bearer NQ.xTM1JSK9d5a-BXr1kFMtZsL0sjKK-IeUCicKBh7TpkeJ9Snw7zvtv6TZ0iEt
 
 ### update not assigned delivery 
 PUT  {{baseUrl}}/tournees/updateState/1 

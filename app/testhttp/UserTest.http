@@ -4,7 +4,7 @@
 ### get all users
 GET {{baseUrl}}/users
 Content-Type: application/json
-Authorization: Bearer Nw.nQ8TUrWICPRjJe61euigIVl2MIoJbeaO6UhafyPG8asJY54mZE0wa_JznLHd
+Authorization: Bearer Ng.cqEEqtSj-EAIi2GxyZFs7VS9-RJe_dGPth7hAu1zGQ_fHj3HQe53HX31jcuW
 
 
 ### get all users with non-admin token
