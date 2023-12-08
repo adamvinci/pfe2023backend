@@ -40,10 +40,8 @@ export default class TourneesController {
         //assign tourneesid to nursery
         const { creches } = payload;
         creches.forEach(async (id) => {
-            const creche = await Creche.find(id);
-            if (creche) {
-                creche.tourneeId = tourneeId;
-            }
+            const creche = await Creche.findOrFail(id);
+            creche.tourneeId = tourneeId;
             await creche?.save();
         })
         const createdTournee = await Tournee.query().where('id', tourneeId).preload('user').preload('creches')
@@ -82,10 +80,8 @@ export default class TourneesController {
             return response.notFound({ message: 'You cannot update this delivery' });
         }
 
-        const creche = await Creche.find(nurseryId)
-        if (creche === null) {
-            return response.badRequest({ message: 'This nursery does not exist' })
-        }
+        const creche = await Creche.findOrFail(nurseryId)
+
         if (creche.tourneeId !== deliveryId) {
             return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
         }
@@ -131,8 +127,8 @@ export default class TourneesController {
         if (auth.user?.id !== idDeliveryMan) return response.badRequest({ message: "You cant assign someone else than yourself" })
         if (auth.user?.isAdmin) return response.badRequest({ message: "This user cant delivery" })
 
-        const delivery = await Tournee.find(idDelivery);
-        if (delivery && !delivery.userId) {
+        const delivery = await Tournee.findOrFail(idDelivery);
+        if (!delivery.userId) {
             delivery.userId = idDeliveryMan;
             await delivery.save();
             return response.ok({ message: "You have been assigned to this delivery" })
