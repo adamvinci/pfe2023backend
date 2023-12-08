@@ -1,4 +1,4 @@
-@baseUrl = https://pfe-2023-backend-prod.azurewebsites.net
+@baseUrl = http://localhost:3333
 ### login admin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
@@ -14,17 +14,17 @@ Content-Type: application/json
 
 {
     "nom":"livreur1",
-    "password":"livreur1"
+    "password":"livreur2"
 }
 
 ### register livreur with admin token
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+Authorization: Bearer MTQz.BkQC71iPrJ1t9pFK4CiHL6tm-sXcMlfa4NzKs5rdre0c89bObGjO15p5n5tB
 
 {
-    "nom": "hahatudoisecriretoutcadansleloginpourteconnecter3",
-    "password": "livreur2"
+    "nom": "zizi",
+    "password": "zezette"
 }
 
 ### register same livreur with admin token
