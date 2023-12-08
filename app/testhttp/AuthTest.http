@@ -1,11 +1,11 @@
-@baseUrl = http://localhost:3333
+@baseUrl = https://pfe-2023-backend-prod.azurewebsites.net
 ### login admin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"adame.barhdadi@student.vinci.be",
-    "password":"S0maV"
+    "nom":"maximilien",
+    "password":"71password"
 }
 
 ### login livreur
