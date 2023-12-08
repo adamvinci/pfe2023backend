@@ -28,7 +28,7 @@ Route.get('/', async () => {
 Route.post('/auth/login', 'AuthController.login')
 Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
 Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('isAdmin')
-Route.get('/auth/resetPasswordAdmin', 'AuthController.resetPasswordAdmin').middleware('isAdmin') // todo
+Route.post('/auth/resetPasswordAdmin', 'AuthController.forgotPassword') // todo
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
 Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin')

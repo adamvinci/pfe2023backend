@@ -5,6 +5,7 @@ import LoginValidator from 'App/Validators/Auth/LoginValidator'
 import ResetPasswordValidator from 'App/Validators/Auth/ResetPasswordValidator'
 import StoreUserValidator from 'App/Validators/Auth/StoreUserValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
+import Mail from '@ioc:Adonis/Addons/Mail'
 export default class AuthController {
     public async register({ request, response }: HttpContextContract) {
         const payload = await request.validate(StoreUserValidator)
@@ -38,19 +39,21 @@ export default class AuthController {
     public async forgotPassword({ response, request }: HttpContextContract) {
         const payload = await request.validate(ResetPasswordValidator)
         const user = await User.findByOrFail("nom", payload.email);
-        if (!user?.$attributes.isAdmin) response.forbidden({ message: "You cant reset this user password" });
+        console.log(user?.$attributes.isAdmin)
+        if (!user.$attributes.isAdmin) return response.forbidden({ message: "You cant reset this user password" });
         const newPassword = string.generateRandom(5);
 
         // Update the user's password in the database
         user.password = newPassword;
         await user.save();
 
-        await Mail.send('emails.newPassword', { user, newPassword }, (message) => {
+        await Mail.send((message) => {
             message
-                .to(user.email)
-                .from('noreply@example.com')
-                .subject('New Password');
-        });
-        console.log(user)
+                .from('snappiesreset@example.com')
+                .to(user.nom)
+                .subject(`Connect with this new password ${newPassword}`)
+
+        })
+        return response.ok({ email: 'If this email exist you will receive a new password by email' })
     }
 }

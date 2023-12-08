@@ -1,12 +1,11 @@
-@baseUrl = https://pfe-2023-backend-dev.azurewebsites.net/
-
+@baseUrl = http://localhost:3333
 ### login admin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"maximilien",
-    "password":"71password"
+    "nom":"adame.barhdadi@student.vinci.be",
+    "password":"S0maV"
 }
 
 ### login livreur
@@ -108,4 +107,12 @@ Content-Type: application/json
 {
     "eail":"livreur1@hotmail.com",
     "passwrd":"livreur1"
+}
+
+### test resetpassword with a non admin email
+POST {{baseUrl}}/auth/resetPasswordAdmin
+Content-Type: application/json
+
+{
+    "email":"adame.barhdadi@student.vinci.be"
 }
