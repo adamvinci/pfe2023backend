@@ -33,6 +33,7 @@ export default class TourneesController {
 
         //create tournee with delivery man
         const tournee = new Tournee();
+        tournee.nom = payload.nom
         await tournee.save();
         const tourneeId = tournee.$attributes.id
 

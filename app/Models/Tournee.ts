@@ -15,7 +15,6 @@ export default class Tournee extends BaseModel {
   @column()
   public nombreCaisseLingeLRestante: number
 
-
   @column()
   public nombreCaisseInsertRestante: number
 
@@ -36,6 +35,9 @@ export default class Tournee extends BaseModel {
 
   @hasMany(() => Creche)
   public creches: HasMany<typeof Creche>
+
+  @column()
+  public nom: String
 
 }
 

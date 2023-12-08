@@ -17,8 +17,9 @@ export default class AuthController {
         const { nom, password } = await request.validate(LoginValidator)
 
         const token = await auth.attempt(nom, password)
+        const user = await User.findBy("nom", nom);
 
-        return response.ok(token)
+        return response.ok({ token, user })
     }
 
     // Admin can change password of user and his password

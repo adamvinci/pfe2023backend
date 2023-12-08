@@ -1,11 +1,11 @@
-@baseUrl = https://pfe-2023-backend-dev.azurewebsites.net
+@baseUrl = http://localhost:3333
 
 ### login admin
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter",
+    "nom":"maximilien",
     "password":"71password"
 }
 
@@ -14,7 +14,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter2",
+    "nom":"livreur1",
     "password":"livreur1"
 }
 

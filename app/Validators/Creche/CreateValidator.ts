@@ -27,8 +27,8 @@ export default class CreateValidator {
   public schema = schema.create({
     nom: schema.string([rules.minLength(3)]),
     adresse: schema.string({}, [rules.minLength(5), rules.unique({ table: 'creches', column: 'adresse' }),]),
-    gsm: schema.string([rules.minLength(10)]),
-    ville: schema.string([rules.minLength(5)])
+    gsm: schema.string.optional([rules.minLength(10)]),
+    ville: schema.string([rules.minLength(2)])
   })
 
   /**

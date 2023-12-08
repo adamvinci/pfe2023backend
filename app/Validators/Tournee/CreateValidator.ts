@@ -43,6 +43,7 @@ export default class CreateValidator {
    */
 
   public schema = schema.create({
+    nom: schema.string([rules.minLength(3), rules.unique({ table: 'tournees', column: 'nom' })]),
     creches: schema.array().members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
   })
 
