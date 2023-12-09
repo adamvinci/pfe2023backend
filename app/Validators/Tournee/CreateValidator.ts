@@ -2,18 +2,6 @@ import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 
-
-
-//verify if these nursery are not already assigned to a delivery work sometimes
-/*validator.rule('nurseryAlreadyAssigned', async (value, _, options) => {
-  const creche = await Creche.findOrFail(value)
-  if (creche.$attributes.tourneeId !== null) {
-      options.errorReporter.report(
-          'nurseryAlreadyAssigned',
-          `This nursery: ${creche.$attributes.nom} is already associated with a tournee`,
-      )
-  }
-});*/
 export default class CreateValidator {
   constructor(protected ctx: HttpContextContract) { }
 
@@ -39,7 +27,13 @@ export default class CreateValidator {
 
   public schema = schema.create({
     nom: schema.string([rules.minLength(3), rules.unique({ table: 'tournees', column: 'nom' })]),
-    creches: schema.array([rules.minLength(1)]).members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
+    creches: schema.array([rules.minLength(1)]).members(schema.number([rules.exists({
+      table: 'creches', column: 'id', where: {
+        tournee_id: null
+      },
+    })
+    ]),
+    ),
   })
 
   /**
@@ -53,5 +47,7 @@ export default class CreateValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'creches.*.exists': 'This nursery does not exist or is already in a delivery',
+  }
 }

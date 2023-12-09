@@ -19,7 +19,7 @@ Authorization: Bearer OA.LQyKXZnFdYTgNjcVqolV7Amsryu2Ib8nhVGnOopr63v5fNEdrLXVLcL
 ### get delivery with livreur token
 GET {{baseUrl}}/users/delivery
 Content-Type: application/json
-Authorization: Bearer MTI.Daa_HykT-BLFvhTNti19besDgJT7ABsbL3RkMzOM_K0wKu3B_avIe17wTxml
+Authorization: Bearer NjI.fuLRmdAlE6KzJE121ZSH11AiTWeeM-WJW_i2r7iBIOooe9yxTW9_fMuzmO-7
 
 
 

@@ -4,11 +4,11 @@
 ### Create delivery 
 POST {{baseUrl}}/tournees
 Content-Type: application/json
-Authorization: Bearer MTY5.SG3JtINMEqAwYcfH_XXs5LJeprH2EITVozXYv8bfA4M-pWBSE3oQefYCSNfH
+Authorization: Bearer NDk.MNDMCk2N9H32YkLZDdkAnmHv6b6l4VYEsYLVjVZvEYx_Co4mmk_qJ8tuZj8P
 
 {
-    "creches":[1],
-    "nom":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    "creches":[30,32],
+    "nom":"Tournee bclia8"
 }
 
 
