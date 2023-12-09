@@ -42,6 +42,7 @@ export default class TourneesController {
 
     // update isDelivered to true and calcul the remaining quantity in the delivery man car
     public async updateDeliveryQuantity({ request, response, auth }: HttpContextContract) {
+        console.log("shesh");
         const userId = auth.user!
 
         const payload = await request.validate(UpdateCommandValidator)
@@ -49,7 +50,7 @@ export default class TourneesController {
         const { deliveryId } = payload;
         // Check if this delivery is assigned to this user
         const delivery = await Tournee.query()
-            .where('id_tournee', deliveryId)
+            .where('id', deliveryId)
             .where('user_id', userId.id)
             .first()
 
@@ -79,12 +80,22 @@ export default class TourneesController {
         const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
         // Update nombreCaisseRestante based on the differences
-        delivery.nombreCaisseGantSupplementaire += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
-        delivery.nombreCaisseSacPoubelleSupplementaire += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
-        delivery.nombreCaisseInsertSupplementaire += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
-        delivery.nombreCaisseLingeLSupplementaire += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
-        delivery.nombreCaisseLingeMSupplementaire += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
-        delivery.nombreCaisseLingeSSupplementaire += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
+        delivery.nombreCaisseGantAPrendre += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleAPrendre += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertAPrendre += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLAprendre += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMAprendre += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSAprendre += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
+
+         // Update nombreCaisseSupplementaire based on the differences
+        delivery.nombreCaisseGantSupplementaire -= diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleSupplementaire -= diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertSupplementaire -= diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLSupplementaire -= diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMSupplementaire -= diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSSupplementaire -= diffNombreCaisseLingeS;
+        
+        
         // Update the state and quantity
         await delivery.save();
         creche.isDelivered = true;

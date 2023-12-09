@@ -28,82 +28,85 @@ GET  {{baseUrl}}/tournees
 Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_1fPHG
 
 ### update not assigned delivery 
-PUT  {{baseUrl}}/tournees/updateState/1 
+POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
 
 {
-    "nombreCaisseGantLivre": 5,
-    "nombreCaisseSacPoubelleLivre":5,
-    "nombreCaisseInsertLivre": 5,
-    "nombreCaisseLingeLLivre": 5,
-    "nombreCaisseLingeMLivre": 5,
-    "nombreCaisseLingeSLivre": 5
-    "nurseryId":
-    "deliveryId":
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 3,
+  "nombreCaisseSacPoubelleLivre": 10,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
+  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeSLivre": 1
 }
+
 ### update already delivered delivery
-PUT  {{baseUrl}}/tournees/updateState
+POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
 
 {
-    "nombreCaisseGantLivre": 5,
-    "nombreCaisseSacPoubelleLivre":5,
-    "nombreCaisseInsertLivre": 5,
-    "nombreCaisseLingeLLivre": 5,
-    "nombreCaisseLingeMLivre": 5,
-    "nombreCaisseLingeSLivre": 5,
-    "nurseryId":
-    "deliveryId":
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 3,
+  "nombreCaisseSacPoubelleLivre": 10,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
+  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeSLivre": 1
 }
+
 ### update assigned  delivery
-PUT  {{baseUrl}}/tournees/updateState
+POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
 
 {
-    "nombreCaisseGantLivre": 5,
-    "nombreCaisseSacPoubelleLivre":5,
-    "nombreCaisseInsertLivre": 5,
-    "nombreCaisseLingeLLivre": 5,
-    "nombreCaisseLingeMLivre": 5,
-    "nombreCaisseLingeSLivre": 5,
-    "nurseryId":
-    "deliveryId":
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 3,
+  "nombreCaisseSacPoubelleLivre": 10,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
+  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeSLivre": 1
 }
 
 ### update assigned  delivery but already delivered
-PUT  {{baseUrl}}/tournees/updateState/2 
+POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEWeOPOD
 
 {
-    "nombreCaisseGantLivre": 5,
-    "nombreCaisseSacPoubelleLivre":5,
-    "nombreCaisseInsertLivre": 5,
-    "nombreCaisseLingeLLivre": 5,
-    "nombreCaisseLingeMLivre": 5,
-    "nombreCaisseLingeSLivre": 5,
-    "nurseryId":,
-    "deliveryId":
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 2,
+  "nombreCaisseSacPoubelleLivre": 12,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
+  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeSLivre": 1
 }
 
 ### update assigned delivery but with non corresponding nursery
-PUT  {{baseUrl}}/tournees/updateState/2 
+POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEWeOPOD
 
 {
-    "nombreCaisseGantLivre": 5,
-    "nombreCaisseSacPoubelleLivre":5,
-    "nombreCaisseInsertLivre": 5,
-    "nombreCaisseLingeLLivre": 5,
-    "nombreCaisseLingeMLivre": 5,
-    "nombreCaisseLingeSLivre": 5,
-    "nurseryId":,
-    "deliveryId":
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 2,
+  "nombreCaisseSacPoubelleLivre": 12,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
+  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeSLivre": 1
 }
+
 
 ### DELETE one tournee
 DELETE {{baseUrl}}/tournees/1
