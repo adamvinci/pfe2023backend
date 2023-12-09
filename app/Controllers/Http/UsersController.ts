@@ -23,7 +23,7 @@ export default class UserController {
 
   public async getDelivery({ auth, response }: HttpContextContract) {
     if (auth.user!.$attributes.isAdmin) {
-      const tournees = await Tournee.query().whereNotNull("userId").preload('creches')
+      const tournees = await Tournee.query().whereNotNull("userId").preload('user').preload('creches')
       if (tournees.length === 0) return response.ok({ message: "No delivery assigned for today" });
       return response.ok(tournees)
     }
