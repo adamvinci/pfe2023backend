@@ -3,7 +3,7 @@ import Tournee from "App/Models/Tournee";
 
 var cron = require('node-cron');
 
-cron.schedule('* * * * * *', async function () {
+cron.schedule('59 10 5 * * *', async function () {
     const tournees = await Tournee.all();
     for (const tournee of tournees) {
         const creches = await Creche.query().where('tourneeId', tournee.$attributes.id);
