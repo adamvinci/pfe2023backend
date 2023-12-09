@@ -2,7 +2,7 @@
 
 ### GET all nursery
 GET {{baseUrl}}/creches
-Authorization: Bearer MTk.peUYBfZWRn9RXgpzOTAxqgCeq9KycrKdbM_cRjEbBlrYqrwBjsRn5z135RSz
+Authorization: Bearer MTY3.lkZP8UQyTlrAPXukDq4dZkXVu1DduZYikSi43VQYAhRobDwB2Bf3cCSo6njL
 
 ### Create one nursery
 POST {{baseUrl}}/creches
@@ -28,15 +28,15 @@ Authorization: Bearer NQ.EeUNBiacEgQ0RIYtdm-vrAukVwOTPSASKCAomQH9ZKxrvY2eRPsz8Y0
     "ville":"lv"
 }
 ### add product quantity to nursery
-POST {{baseUrl}}/creches/17
+POST {{baseUrl}}/creches/1
 Content-Type: application/json
-Authorization: Bearer MQ.XaKtc15OUOOPsrMUqMEHR0J2Gi8_E0H8sZnM7duVtfX-PZI_LNuXMNv4qzMT
+Authorization: Bearer MTY4.lwLgR26NFYVkE5nofSksRQYAkM5HOx8N3eJo9H4RwjJyrDkmK7C6CjHW8fgi
 
 {
-    "nombreCaisseLingeS": 0.5,
-    "nombreCaisseLingeM": 0.5,
-    "nombreCaisseLingeL": 5,
-    "nombreCaisseInsert": 8,
+    "nombreCaisseLingeS": 10,
+    "nombreCaisseLingeM": 15,
+    "nombreCaisseLingeL": 50,
+    "nombreCaisseInsert": 80,
     "nombreCaisseSacPoubelle": 10,
     "nombreCaisseGant": 7
 }

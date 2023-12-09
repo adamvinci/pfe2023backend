@@ -63,7 +63,7 @@ Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_Mg
 
 ### get all with admin token
 GET {{baseUrl}}/tournees
-Authorization: Bearer NA.x8V_IVBSOVtBKvEpecbjxovQnc3CoY4IuV97oOWZSS3dKupXqrj31JXfAkV0
+Authorization: Bearer MTY3.lkZP8UQyTlrAPXukDq4dZkXVu1DduZYikSi43VQYAhRobDwB2Bf3cCSo6njL
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
