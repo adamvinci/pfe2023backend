@@ -7,52 +7,53 @@ import StoreUserValidator from 'App/Validators/Auth/StoreUserValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import Mail from '@ioc:Adonis/Addons/Mail'
 export default class AuthController {
-    public async register({ request, response }: HttpContextContract) {
-        const payload = await request.validate(StoreUserValidator)
+  public async register({ request, response }: HttpContextContract) {
+    const payload = await request.validate(StoreUserValidator)
 
-        const user = await User.create(payload)
+    const user = await User.create(payload)
 
-        return response.created(user) // 201 CREATED
-    }
+    return response.created(user) // 201 CREATED
+  }
 
-    public async login({ auth, request, response }: HttpContextContract) {
-        const { nom, password } = await request.validate(LoginValidator)
+  public async login({ auth, request, response }: HttpContextContract) {
+    const { nom, password } = await request.validate(LoginValidator)
 
-        const token = await auth.attempt(nom, password)
-        const user = await User.findBy("nom", nom);
+    const token = await auth.attempt(nom, password)
+    const user = await User.findBy("nom", nom);
 
-        return response.ok({ token, user })
-    }
+    return response.ok({ token, user })
+  }
 
-    // Admin can change password of user and his password
-    public async updatePassword({ request, response }: HttpContextContract) {
-        const { idUser, password } = await request.validate(ChangePasswordValidator)
+  // Admin can change password of user and his password
+  public async updatePassword({ auth, request, response }: HttpContextContract) {
+    const { idUser, password } = await request.validate(ChangePasswordValidator)
 
-        const user = await User.findOrFail(idUser);
-        user.password = password;
-        await user.save();
+    const user = await User.findOrFail(idUser);
+    if (user.isAdmin && (auth.user!.id !== user.id)) return response.forbidden({ messge: "You cant change the password of another admin" })
+    user.password = password;
+    await user.save();
 
-        return response.ok({ message: 'password changed' })
-    }
+    return response.ok({ message: 'password changed' })
+  }
 
-    // Reset admin password endpoint
-    public async forgotPassword({ response, request }: HttpContextContract) {
-        const payload = await request.validate(ResetPasswordValidator)
-        const user = await User.findByOrFail("nom", payload.email);
-        console.log(user?.$attributes.isAdmin)
-        if (!user.$attributes.isAdmin) return response.forbidden({ message: "You cant reset this user password" });
-        const newPassword = string.generateRandom(5);
+  // Reset admin password endpoint
+  public async forgotPassword({ response, request }: HttpContextContract) {
+    const payload = await request.validate(ResetPasswordValidator)
+    const user = await User.findByOrFail("nom", payload.email);
+    console.log(user?.$attributes.isAdmin)
+    if (!user.$attributes.isAdmin) return response.forbidden({ message: "You cant reset this user password" });
+    const newPassword = string.generateRandom(5);
 
-        // Update the user's password in the database
-        user.password = newPassword;
-        await user.save();
+    // Update the user's password in the database
+    user.password = newPassword;
+    await user.save();
 
-        await Mail.send((message) => {
-            message
-                .from('snappiesreset@example.com')
-                .to(user.nom)
-                .subject(`Password reset`)
-                .html(`<!DOCTYPE html>
+    await Mail.send((message) => {
+      message
+        .from('snappiesreset@example.com')
+        .to(user.nom)
+        .subject(`Password reset`)
+        .html(`<!DOCTYPE html>
                 <html lang="en">
                 <head>
                   <meta charset="UTF-8">
@@ -96,7 +97,7 @@ export default class AuthController {
                 </body>
                 </html>`)
 
-        })
-        return response.ok({ email: 'If this email exist you will receive a new password by email' })
-    }
+    })
+    return response.ok({ email: 'If this email exist you will receive a new password by email' })
+  }
 }

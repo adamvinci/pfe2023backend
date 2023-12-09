@@ -58,17 +58,27 @@ Authorization: Bearer Mg.AQ1QFjKTND98QLsfCCKr1zmjRYN6t2mYL7BUNg3PUBIhXWxICmKEyf5
 ### Change user password with user token
 POST {{baseUrl}}/auth/updatePassword 
 Content-type: application/json
-Authorization: Bearer Mg.AQ1QFjKTND98QLsfCCKr1zmjRYN6t2mYL7BUNg3PUBIhXWxICmKEyf5N-Ej1
+Authorization: Bearer MzE.aDC06jkCHF9SJwY0z3MAt8krutdnFw5QSbcntQCblx9qLnGsuISfInDBRujz
 
 {
     "idUser": "2",
-    "password": "livreur2"
+    "password": "livreur1"
 }
 
 ### Change user password with admin token
 POST {{baseUrl}}/auth/updatePassword 
 Content-type: application/json
 Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+
+{
+    "idUser": "2",
+    "password": "livreur2"
+}
+
+### Change admin password with another admin token
+POST {{baseUrl}}/auth/updatePassword 
+Content-type: application/json
+Authorization: Bearer OA.LQyKXZnFdYTgNjcVqolV7Amsryu2Ib8nhVGnOopr63v5fNEdrLXVLcLzq9py
 
 {
     "idUser": "2",

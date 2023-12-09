@@ -20,21 +20,6 @@ export default class TourneesController {
 
         const payload = await request.validate(CreateValidator);
 
-        //verify if these nursery are not already assigned to a delivery
-        const crechesWithTournee = await Creche.query().whereNotNull('tournee_id');
-        const invalidCrecheIds: string[] = [];
-        crechesWithTournee.forEach((creche) => {
-            const foundCreche = payload.creches.find((crecheId) => crecheId === creche.$attributes.id);
-
-            if (foundCreche) {
-                invalidCrecheIds.push(creche.$attributes.nom);
-            }
-        });
-        if (invalidCrecheIds.length > 0) {
-            return response.badRequest({
-                message: `The following creches are already associated with a tournee: ${invalidCrecheIds.join(', ')}`,
-            });
-        }
 
         //create tournee with delivery man
         const tournee = new Tournee();
@@ -55,7 +40,7 @@ export default class TourneesController {
 
 
 
-    // update isDelivered to true if not already true and if the delivery is assigned to this user
+    // update isDelivered to true and calcul the remaining quantity in the delivery man car
     public async updateDeliveryQuantity({ request, response, auth }: HttpContextContract) {
         const userId = auth.user!
 
@@ -78,11 +63,12 @@ export default class TourneesController {
             return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
         }
 
+        //si y'a une erreur d'encodage?
         if (creche.isDelivered) {
             return response.badRequest({ message: 'Tournee has already been delivered' })
         }
 
-        //Uptade remaining quantity in delivery
+        // Update remaining quantity in delivery
         const { nombreCaisseGantLivre, nombreCaisseSacPoubelleLivre, nombreCaisseInsertLivre,
             nombreCaisseLingeLLivre, nombreCaisseLingeMLivre, nombreCaisseLingeSLivre } = payload
         const diffNombreCaisseGant = nombreCaisseGantLivre - creche.nombreCaisseGant;
@@ -99,14 +85,10 @@ export default class TourneesController {
         delivery.nombreCaisseLingeLRestante += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
         delivery.nombreCaisseLingeMRestante += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
         delivery.nombreCaisseLingeSRestante += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
-
-
         // Update the state and quantity
         await delivery.save();
         creche.isDelivered = true;
         await creche.save();
-
-
         return response.ok({ delivery })
     }
 

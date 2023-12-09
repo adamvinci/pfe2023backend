@@ -34,7 +34,6 @@ export default class CreateDeliveryValidator {
     gsm: schema.string.optional([rules.minLength(10)]),
     adresse: schema.string.optional([rules.minLength(5), rules.unique({ table: 'creches', column: 'adresse' })]),
     ville: schema.string.optional([rules.minLength(5)]),
-    //jourDeLaSemaine:schema.array
   })
 
   /**

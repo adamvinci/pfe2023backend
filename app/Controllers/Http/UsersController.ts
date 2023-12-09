@@ -2,7 +2,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Tournee from 'App/Models/Tournee';
 import User from 'App/Models/User'
-import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
+import AssignDeliveryValidator from 'App/Validators/Creche/AssignDeliveryValidator';
 
 export default class UserController {
 
@@ -22,7 +22,6 @@ export default class UserController {
   }
 
   public async getDelivery({ auth, response }: HttpContextContract) {
-    console.log(auth.user!.$attributes.isAdmin)
     if (auth.user!.$attributes.isAdmin) {
       const tournees = await Tournee.query().whereNotNull("userId").preload('creches')
       if (tournees.length === 0) return response.ok({ message: "No delivery assigned for today" });
@@ -34,7 +33,6 @@ export default class UserController {
   }
 
   public async chooseDelivery({ auth, request, response, }: HttpContextContract) {
-
     const { idDelivery, idDeliveryMan } = await request.validate(AssignDeliveryValidator);
 
     if (auth.user?.id !== idDeliveryMan) return response.badRequest({ message: "You cant assign someone else than yourself" })

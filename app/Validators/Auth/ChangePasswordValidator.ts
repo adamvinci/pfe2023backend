@@ -39,5 +39,6 @@ export default class ChangePasswordValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+  }
 }
