@@ -79,12 +79,12 @@ export default class TourneesController {
         const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
         // Update nombreCaisseRestante based on the differences
-        delivery.nombreCaisseGantRestante += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
-        delivery.nombreCaisseSacPoubelleRestante += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
-        delivery.nombreCaisseInsertRestante += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
-        delivery.nombreCaisseLingeLRestante += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
-        delivery.nombreCaisseLingeMRestante += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
-        delivery.nombreCaisseLingeSRestante += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
+        delivery.nombreCaisseGantSupplementaire += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleSupplementaire += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertSupplementaire += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLSupplementaire += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMSupplementaire += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSSupplementaire += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
         // Update the state and quantity
         await delivery.save();
         creche.isDelivered = true;
