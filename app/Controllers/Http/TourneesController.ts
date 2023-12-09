@@ -1,14 +1,19 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
-import User from 'App/Models/User';
-import AssignDeliveryValidator from 'App/Validators/Tournee/AssignDeliveryValidator';
 import CreateValidator from 'App/Validators/Tournee/CreateValidator';
 import UpdateCommandValidator from 'App/Validators/Tournee/UpdateCommandValidator';
 
 
 
 export default class TourneesController {
+
+    // Send All the delivery with no assigned delivery man
+    public async getAll({ response }: HttpContextContract) {
+        const tournees = await Tournee.query().whereNull("userId").preload('user').preload('creches')
+        return response.ok(tournees)
+    }
+
 
     // create a tournee and assign the tournee to the nursery
     public async createOne({ request, response }: HttpContextContract) {
@@ -48,20 +53,7 @@ export default class TourneesController {
         return response.ok({ createdTournee })
     }
 
-    // Send All the delivery if the token belongs to the admin , if the token belongs to a delivering man it send all its delivery for today
-    public async getAll({ auth, response }: HttpContextContract) {
-        const user = auth.user!
 
-        if (user.$original.isAdmin) {
-            const tournees = await Tournee.query().preload('user').preload('creches')
-            console.log()
-            return response.ok(tournees)
-        }
-        const tourneesByUser = await User.query().where('id', user.id).preload('tournees', (query) => {
-            query.preload('creches');
-        });
-        return response.ok(tourneesByUser)
-    }
 
     // update isDelivered to true if not already true and if the delivery is assigned to this user
     public async updateDeliveryQuantity({ request, response, auth }: HttpContextContract) {
@@ -120,26 +112,21 @@ export default class TourneesController {
 
 
 
-    public async chooseDelivery({ auth, request, response, }: HttpContextContract) {
-
-        const { idDelivery, idDeliveryMan } = await request.validate(AssignDeliveryValidator);
-
-        if (auth.user?.id !== idDeliveryMan) return response.badRequest({ message: "You cant assign someone else than yourself" })
-        if (auth.user?.isAdmin) return response.badRequest({ message: "This user cant delivery" })
-
-        const delivery = await Tournee.findOrFail(idDelivery);
-        if (!delivery.userId) {
-            delivery.userId = idDeliveryMan;
-            await delivery.save();
-            return response.ok({ message: "You have been assigned to this delivery" })
-        } else {
-            if (delivery?.userId == auth.user.id) {
-                return response.ok({ message: "You have already been added to this delivery" })
+    public async deleteOne({ response, params }: HttpContextContract) {
+        const idDelivery = params.id
+        const tournee = await Tournee.find(idDelivery)
+        if (tournee == null) return response.notFound();
+        const creches = await Creche.query().where('tourneeId', tournee.$attributes.id);
+        if (creches) {
+            for (const creche of creches) {
+                creche.$attributes.tourneeId = null;
+                await creche.save();
             }
-            return response.conflict({ message: "Someone else took over this delivery" })
         }
-    }
 
+        tournee.delete()
+        return response.ok({ message: "Delivery deleted" });
+    }
 
 }
 

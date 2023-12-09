@@ -46,3 +46,7 @@ DELETE {{baseUrl}}/creche/1
 Content-Type: application/json
 Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
 
+### delete from tournee
+DELETE {{baseUrl}}/creche/fromTournee/1
+Content-Type: application/json
+Authorization: Bearer MjAy.OE2G_N0PmtjOj_Idf5KDuVKzXcbml0HAOvDieH2Mfes4Ks-DlHP0doo-RlXG

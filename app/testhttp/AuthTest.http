@@ -14,7 +14,15 @@ Content-Type: application/json
 
 {
     "nom":"livreur1",
-    "password":"livreur2"
+    "password":"livreur1"
+}
+### login livreur
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "nom":"livreur2",
+    "password":"livreur1"
 }
 
 ### register livreur with admin token
@@ -23,8 +31,8 @@ Content-type: application/json
 Authorization: Bearer MTQz.BkQC71iPrJ1t9pFK4CiHL6tm-sXcMlfa4NzKs5rdre0c89bObGjO15p5n5tB
 
 {
-    "nom": "zizi",
-    "password": "zezette"
+    "nom": "zzzz",
+    "password": "123456"
 }
 
 ### register same livreur with admin token

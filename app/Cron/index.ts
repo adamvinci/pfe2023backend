@@ -3,7 +3,7 @@ import Tournee from "App/Models/Tournee";
 
 var cron = require('node-cron');
 
-cron.schedule('* 40 12 * * *', async function () {
+cron.schedule('59 10 5 * * *', async function () {
     const tournees = await Tournee.all();
     for (const tournee of tournees) {
         const creches = await Creche.query().where('tourneeId', tournee.$attributes.id);
@@ -28,7 +28,7 @@ cron.schedule('* 40 12 * * *', async function () {
         for (const prop in sumAttributes) {
             sumAttributes[prop] += Math.round(sumAttributes[prop] * percentageFactor);
         }
-
+        tournee.$attributes.userId = null
         tournee.$attributes.nombreCaisseGantRestante = sumAttributes.nombreCaisseGantSum
         tournee.$attributes.nombreCaisseLingeSRestante = sumAttributes.nombreCaisseLingeSSum
         tournee.$attributes.nombreCaisseLingeMRestante = sumAttributes.nombreCaisseLingeMSum
@@ -37,7 +37,11 @@ cron.schedule('* 40 12 * * *', async function () {
         tournee.$attributes.nombreCaisseSacPoubelleRestante = sumAttributes.nombreCaisseSacPoubelleSum
         // Save the updated tournee
         await tournee.save();
-        console.log(`Quantity to transport for ${tournee.$attributes.id} updated`)
+        for (const creche of creches) {
+            creche.isDelivered = false;
+            await creche.save();
+        }
+        console.log(` ${tournee.$attributes.nom} updated for today`)
     }
 
 })

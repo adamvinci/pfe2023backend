@@ -3,11 +3,13 @@ import CreateDeliveryValidatorRequest from 'App/Validators/Creche/CreateDelivery
 import CreateValidator from 'App/Validators/Creche/CreateValidator';
 import Creche from 'App/Models/Creche';
 export default class CrechesController {
+
     public async getAll({ response, }: HttpContextContract) {
         const creches = await Creche.all();
         if (creches == null) return response.noContent();
         return response.ok({ creches })
     }
+
     public async createOne({ request, response, }: HttpContextContract) {
         const payload = await request.validate(CreateValidator)
 
@@ -15,6 +17,7 @@ export default class CrechesController {
 
         return response.created(newCreche) // 201 CREATED
     }
+
     public async addNurseryCommand({ params, request, response, }: HttpContextContract) {
         const idCreche = params.idCreche;
         const payload = await request.validate(CreateDeliveryValidatorRequest);
@@ -26,12 +29,22 @@ export default class CrechesController {
         await creche?.merge(payload).save()
         return response.ok({ creche });
     }
+
     public async deleteOne({ response, params }: HttpContextContract) {
         const idCreche = params.id
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
         creche.delete()
         return response.ok({ message: "Creche deleted" });
+    }
+
+    public async deleteFromTournee({ response, params }: HttpContextContract) {
+        const idCreche = params.id
+        const creche = await Creche.find(idCreche)
+        if (creche == null) return response.notFound();
+        creche.$attributes.tourneeId = null;
+        creche.save()
+        return response.ok({ message: "Creche removed from tournee" });
     }
 
 

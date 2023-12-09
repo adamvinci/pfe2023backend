@@ -6,14 +6,64 @@ GET {{baseUrl}}/users
 Content-Type: application/json
 Authorization: Bearer Ng.cqEEqtSj-EAIi2GxyZFs7VS9-RJe_dGPth7hAu1zGQ_fHj3HQe53HX31jcuW
 
-
 ### get all users with non-admin token
 GET {{baseUrl}}/users
 Content-Type: application/json
 Authorization: Bearer OA.Pido16BeYyO0VmwylH0Nc_qva-ylk1MZwo-JkchrrLdfyiYbJkr-0ri2nAH5
+
+### get delivery with admin token
+GET {{baseUrl}}/users/delivery
+Content-Type: application/json
+Authorization: Bearer OA.LQyKXZnFdYTgNjcVqolV7Amsryu2Ib8nhVGnOopr63v5fNEdrLXVLcLzq9py
+
+### get delivery with livreur token
+GET {{baseUrl}}/users/delivery
+Content-Type: application/json
+Authorization: Bearer MTI.Daa_HykT-BLFvhTNti19besDgJT7ABsbL3RkMzOM_K0wKu3B_avIe17wTxml
+
+
 
 ### delete one
 DELETE {{baseUrl}}/users/2
 Content-Type: application/json
 Authorization: Bearer MQ.oxPdIrYRV-786TERXafS3x4F3ozGoE04748XzF3dm6n7CoruGCA_N-vfz5dt
 
+### Assign delivery to someone else
+POST {{baseUrl}}/users/assignDelivery
+Content-Type: application/json
+Authorization: Bearer OQ.w0WmTOxsm-m-24V9c9jM6LTE15yVLH2v_xeKf0QV37RxZiB-mMp-0cwS8sGk
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":3
+}
+
+### Assign delivery to admin
+POST {{baseUrl}}/users/assignDelivery
+Content-Type: application/json
+Authorization: Bearer OA.LQyKXZnFdYTgNjcVqolV7Amsryu2Ib8nhVGnOopr63v5fNEdrLXVLcLzq9py
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":1
+}
+
+### Assign delivery to self
+POST {{baseUrl}}/users/assignDelivery
+Content-Type: application/json
+Authorization: Bearer MTI.Daa_HykT-BLFvhTNti19besDgJT7ABsbL3RkMzOM_K0wKu3B_avIe17wTxml
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":3
+}
+
+### Assign delivery to self
+POST {{baseUrl}}/users/assignDelivery
+Content-Type: application/json
+Authorization: Bearer MTI.Daa_HykT-BLFvhTNti19besDgJT7ABsbL3RkMzOM_K0wKu3B_avIe17wTxml
+
+{
+    "idDelivery":1,
+    "idDeliveryMan":3
+}

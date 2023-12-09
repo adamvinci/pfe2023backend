@@ -26,21 +26,24 @@ Route.get('/', async () => {
 
 //AuthController
 Route.post('/auth/login', 'AuthController.login')
-Route.post('/auth/register', 'AuthController.register').middleware('isAdmin')
-Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('isAdmin')
-Route.post('/auth/resetPasswordAdmin', 'AuthController.forgotPassword') // todo
+Route.post('/auth/register', 'AuthController.register').middleware('isAdmin') // Allow the admin to add a delivery man
+Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('isAdmin') // Allow the admin to change users passwords
+Route.post('/auth/resetPasswordAdmin', 'AuthController.forgotPassword') // Send a new password to the admin 
 //TourneeController
-Route.get('/tournees', 'TourneesController.getAll').middleware('auth')
-Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin')
-Route.post('/tournees/assignDelivery', 'TourneesController.chooseDelivery').middleware('auth')
+Route.get('/tournees', 'TourneesController.getAll').middleware('auth') // Send the delivery with no assigned delivery man
+Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin') // Create a delivery and add nursery to this delivery
 Route.put('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth') //todo
+Route.delete('/tournees/:id', 'TourneesController.deleteOne').middleware('isAdmin')
 
 // CrecheController
-Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin')
-Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin')
-Route.post('/creches/:idCreche', 'CrechesController.addNurseryCommand').middleware('isAdmin')
+Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin') // Return all the nursery
+Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin') // Create one nursery
+Route.post('/creches/:idCreche', 'CrechesController.addNurseryCommand').middleware('isAdmin') // Add the quantity of box asked by the nursery
 Route.delete('/creche/:id', 'CrechesController.deleteOne').middleware('isAdmin')
+Route.delete('/creche/fromTournee/:id', 'CrechesController.deleteFromTournee').middleware('isAdmin')
 
 // UserController
-Route.get('/users', 'UsersController.listLivreurs').middleware('isAdmin') // Afficher la liste des livreurs
-Route.delete('/users/:id', 'UsersController.deleteOne').middleware('isAdmin') // Suprprime un livreurs
+Route.get('/users', 'UsersController.listLivreurs').middleware('isAdmin') // Show all the delivery man to the admin 
+Route.get('/users/delivery', 'UsersController.getDelivery').middleware('auth') // Allow the user to see all the delivery assigned today, admin can see all 
+Route.delete('/users/:id', 'UsersController.deleteOne').middleware('isAdmin')
+Route.post('/users/assignDelivery', 'UsersController.chooseDelivery').middleware('auth') // Allow delivery man to choose a delivery

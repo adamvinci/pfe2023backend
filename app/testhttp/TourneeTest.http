@@ -1,55 +1,16 @@
-@baseUrl = https://pfe-2023-backend-dev.azurewebsites.net/
+@baseUrl = http://localhost:3333
 
 
 ### Create delivery 
 POST {{baseUrl}}/tournees
 Content-Type: application/json
-Authorization: Bearer MQ.XaKtc15OUOOPsrMUqMEHR0J2Gi8_E0H8sZnM7duVtfX-PZI_LNuXMNv4qzMT
+Authorization: Bearer MTY5.SG3JtINMEqAwYcfH_XXs5LJeprH2EITVozXYv8bfA4M-pWBSE3oQefYCSNfH
 
 {
-    "creches":[14,15],
-    "nom":"tournai"
+    "creches":[1],
+    "nom":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 }
 
-### Assign delivery to someone else
-POST {{baseUrl}}/tournees/assignDelivery
-Content-Type: application/json
-Authorization: Bearer MQ.bbGB-iJ2DvbVjBffKETngcRjPWsMkgtGOkc__aCFEpbZd64s7zDBmhhNztC2
-
-{
-    "idDelivery":1,
-    "idDeliveryMan":2
-}
-
-### Assign delivery to admin
-POST {{baseUrl}}/tournees/assignDelivery
-Content-Type: application/json
-Authorization: Bearer MQ.bbGB-iJ2DvbVjBffKETngcRjPWsMkgtGOkc__aCFEpbZd64s7zDBmhhNztC2
-
-{
-    "idDelivery":1,
-    "idDeliveryMan":1
-}
-
-### Assign delivery to self
-POST {{baseUrl}}/tournees/assignDelivery
-Content-Type: application/json
-Authorization: Bearer NA.eNr0Q423xufoHHK-MfVih-0xi1YWeYCvNIBL81ZCfxn5AAQDJy-16AK4rCJJ
-
-{
-    "idDelivery":1,
-    "idDeliveryMan":2
-}
-
-### Assign delivery to self
-POST {{baseUrl}}/tournees/assignDelivery
-Content-Type: application/json
-Authorization: Bearer NA.eNr0Q423xufoHHK-MfVih-0xi1YWeYCvNIBL81ZCfxn5AAQDJy-16AK4rCJJ
-
-{
-    "idDelivery":1,
-    "idDeliveryMan":2
-}
 
 ### Assign delivery already assigned
 POST {{baseUrl}}/tournees/assignDelivery
@@ -61,13 +22,10 @@ Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_Mg
     "idDeliveryMan":3
 }
 
-### get all with admin token
-GET {{baseUrl}}/tournees
-Authorization: Bearer MTY3.lkZP8UQyTlrAPXukDq4dZkXVu1DduZYikSi43VQYAhRobDwB2Bf3cCSo6njL
 
 ### get all with user 2 token
 GET  {{baseUrl}}/tournees
-Authorization: Bearer NQ.xTM1JSK9d5a-BXr1kFMtZsL0sjKK-IeUCicKBh7TpkeJ9Snw7zvtv6TZ0iEt
+Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_1fPHG
 
 ### update not assigned delivery 
 PUT  {{baseUrl}}/tournees/updateState/1 
@@ -147,4 +105,7 @@ Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEW
     "deliveryId":
 }
 
+### DELETE one tournee
+DELETE {{baseUrl}}/tournees/1
+Authorization: Bearer MTY5.SG3JtINMEqAwYcfH_XXs5LJeprH2EITVozXYv8bfA4M-pWBSE3oQefYCSNfH
 
