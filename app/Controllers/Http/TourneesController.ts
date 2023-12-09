@@ -99,7 +99,15 @@ export default class TourneesController {
         delivery.nombreCaisseLingeLRestante += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
         delivery.nombreCaisseLingeMRestante += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
         delivery.nombreCaisseLingeSRestante += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
-
+        
+        // Update nombreCaisseSupplementaire based on the differences
+        /*delivery.nombreCaisseGantSupplementaire -= diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleSupplementaire -= diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertSupplementaire -= diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLSupplementaire -= diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMSupplementaire -= diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSSupplementaire -= diffNombreCaisseLingeS;
+        */
 
         // Update the state and quantity
         await delivery.save();
