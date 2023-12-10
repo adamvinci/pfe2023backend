@@ -10,9 +10,9 @@ import UpdateOneValidator from 'App/Validators/Tournee/UpdateOneValidator';
 
 export default class TourneesController {
 
-    // Send All the delivery with no assigned delivery man
+    // Send All the delivery
     public async getAll({ response }: HttpContextContract) {
-        const tournees = await Tournee.query().whereNull("userId").preload('user').preload('creches')
+        const tournees = await Tournee.query().preload('user').preload('creches')
         return response.ok(tournees)
     }
 
