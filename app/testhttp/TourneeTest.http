@@ -30,7 +30,7 @@ Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_
 ### update assigned delivery 
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
+Authorization: Bearer MTM.d94SjVxgYZNchWRTH3EsAZ4HTEoWbku9isGi8DRvonR2n3SkbCLzn3v7Yp6z
 
 {
   "nurseryId": 1,

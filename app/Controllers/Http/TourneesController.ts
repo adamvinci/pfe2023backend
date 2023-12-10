@@ -80,11 +80,21 @@ export default class TourneesController {
         const diffNombreCaisseLingeM = nombreCaisseLingeMLivre - creche.nombreCaisseLingeM;
         const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
-        //If one of the requests is negative
-        if(diffNombreCaisseGant>delivery.nombreCaisseGantSupplementaire || diffNombreCaisseSacPoubelle > delivery.nombreCaisseSacPoubelleSupplementaire || diffNombreCaisseInsert>delivery.nombreCaisseInsertSupplementaire ||
-            diffNombreCaisseLingeL>delivery.nombreCaisseLingeLSupplementaire || diffNombreCaisseLingeM>delivery.nombreCaisseLingeMSupplementaire || diffNombreCaisseLingeS>delivery.nombreCaisseLingeSSupplementaire){
-                return response.badRequest({ message: 'not enough extra quantity in stock' })
-            }
+        //Check if one of the requests is negative
+        if (diffNombreCaisseGant > delivery.nombreCaisseGantSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseGantSupplementaire' });
+          } else if (diffNombreCaisseSacPoubelle > delivery.nombreCaisseSacPoubelleSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseSacPoubelleSupplementaire' });
+          } else if (diffNombreCaisseInsert > delivery.nombreCaisseInsertSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseInsertSupplementaire' });
+          } else if (diffNombreCaisseLingeL > delivery.nombreCaisseLingeLSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeLSupplementaire' });
+          } else if (diffNombreCaisseLingeM > delivery.nombreCaisseLingeMSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeMSupplementaire' });
+          } else if (diffNombreCaisseLingeS > delivery.nombreCaisseLingeSSupplementaire) {
+            return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeSSupplementaire' });
+          }
+          
 
 
         // Update nombreCaisseRestante based on the differences
