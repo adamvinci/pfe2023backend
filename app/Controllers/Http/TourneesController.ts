@@ -42,7 +42,7 @@ export default class TourneesController {
 
     // update isDelivered to true and calcul the remaining quantity in the delivery man car
     public async updateDeliveryQuantity({ request, response, auth }: HttpContextContract) {
-        console.log("shesh");
+        
         const userId = auth.user!
 
         const payload = await request.validate(UpdateCommandValidator)

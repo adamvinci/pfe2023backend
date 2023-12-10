@@ -27,31 +27,31 @@ Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_Mg
 GET  {{baseUrl}}/tournees
 Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_1fPHG
 
-### update not assigned delivery 
+### update assigned delivery 
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
+Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
 
 {
   "nurseryId": 1,
   "deliveryId": 1,
-  "nombreCaisseGantLivre": 3,
-  "nombreCaisseSacPoubelleLivre": 10,
+  "nombreCaisseGantLivre": 1,
+  "nombreCaisseSacPoubelleLivre": 1,
   "nombreCaisseInsertLivre": 1,
   "nombreCaisseLingeLLivre": 1,
-  "nombreCaisseLingeMLivre": 3,
+  "nombreCaisseLingeMLivre": 2,
   "nombreCaisseLingeSLivre": 1
 }
 
 ### update already delivered delivery
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
+Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
 
 {
   "nurseryId": 1,
   "deliveryId": 1,
-  "nombreCaisseGantLivre": 3,
+  "nombreCaisseGantLivre": 4,
   "nombreCaisseSacPoubelleLivre": 10,
   "nombreCaisseInsertLivre": 1,
   "nombreCaisseLingeLLivre": 1,
@@ -59,45 +59,30 @@ Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKn
   "nombreCaisseLingeSLivre": 1
 }
 
-### update assigned  delivery
+### update not assigned  delivery
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
 Authorization: Bearer Mg.LeNgXp3R2OP7YTTEOrp0KyoZ4PQSgKAIP_8OBFRnWcrnX6K-GH3ydKnZO0WB
-
-{
-  "nurseryId": 1,
-  "deliveryId": 1,
-  "nombreCaisseGantLivre": 3,
-  "nombreCaisseSacPoubelleLivre": 10,
-  "nombreCaisseInsertLivre": 1,
-  "nombreCaisseLingeLLivre": 1,
-  "nombreCaisseLingeMLivre": 3,
-  "nombreCaisseLingeSLivre": 1
-}
-
-### update assigned  delivery but already delivered
-POST  {{baseUrl}}/tournees/updateState
-Content-Type: application/json
-Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEWeOPOD
 
 {
   "nurseryId": 1,
   "deliveryId": 1,
   "nombreCaisseGantLivre": 2,
-  "nombreCaisseSacPoubelleLivre": 12,
+  "nombreCaisseSacPoubelleLivre": 10,
   "nombreCaisseInsertLivre": 1,
   "nombreCaisseLingeLLivre": 1,
   "nombreCaisseLingeMLivre": 3,
   "nombreCaisseLingeSLivre": 1
 }
 
+
 ### update assigned delivery but with non corresponding nursery
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer Ng.4jpRADX67UDl_eNS6Ar7y_yM9dCalXzA9VvOiLxDw62QFhwbZpjoUEWeOPOD
+Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
 
 {
-  "nurseryId": 1,
+  "nurseryId": 4,
   "deliveryId": 1,
   "nombreCaisseGantLivre": 2,
   "nombreCaisseSacPoubelleLivre": 12,
