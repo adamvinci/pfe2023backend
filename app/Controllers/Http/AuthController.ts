@@ -8,6 +8,7 @@ import { string } from '@ioc:Adonis/Core/Helpers'
 import Mail from '@ioc:Adonis/Addons/Mail'
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
+    console.log("1")
     const payload = await request.validate(StoreUserValidator)
 
     const user = await User.create(payload)

@@ -45,5 +45,12 @@ export default class UpdateCommandValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nombreCaisseGantLivre.unsigned': 'nombreCaisseGantLivre must be >=0',
+    'nombreCaisseSacPoubelleLivre.unsigned': 'nombreCaisseSacPoubelleLivre must be >=0',
+    'nombreCaisseInsertLivre.unsigned': 'nombreCaisseInsertLivre must be >=0',
+    'nombreCaisseLingeLLivre.unsigned': 'nombreCaisseLingeLLivre must be >=0',
+    'nombreCaisseLingeMLivre.unsigned': 'nombreCaisseLingeMLivre must be >=0',
+    'nombreCaisseLingeSLivre.unsigned': 'nombreCaisseLingeSLivre must be >=0'
+  }
 }

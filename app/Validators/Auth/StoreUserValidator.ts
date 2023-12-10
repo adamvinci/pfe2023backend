@@ -24,7 +24,7 @@ export default class StoreUserValidator {
    *    ```
    */
   public schema = schema.create({
-    nom: schema.string([rules.unique({ table: 'users', column: 'nom' }),]),
+    nom: schema.string([rules.unique({ table: 'users', column: 'nom' })]),
     password: schema.string([rules.minLength(5)]),
   })
 
@@ -39,5 +39,8 @@ export default class StoreUserValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nom.unique': 'Name must be unique',
+    'password.minLength': "Password need to have at least 5 caracteres"
+  }
 }

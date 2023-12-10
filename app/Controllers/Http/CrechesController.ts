@@ -10,6 +10,13 @@ export default class CrechesController {
         return response.ok({ creches })
     }
 
+    public async getOne({ params, response, }: HttpContextContract) {
+        const idCreche = params.id
+        const creche = await Creche.find(idCreche)
+        if (creche == null) return response.notFound();
+        return response.ok({ creche });
+    }
+
     public async createOne({ request, response, }: HttpContextContract) {
         const payload = await request.validate(CreateValidator)
 

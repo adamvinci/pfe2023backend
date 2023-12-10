@@ -35,9 +35,11 @@ Route.get('/tournees', 'TourneesController.getAll').middleware('auth') // Send t
 Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin') // Create a delivery and add nursery to this delivery
 Route.delete('/tournees/:id', 'TourneesController.deleteOne').middleware('isAdmin')
 Route.post('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth') //todo
+Route.post('/tournees/updateOne', 'TourneesController.updateOne').middleware('isAdmin') //todo
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin') // Return all the nursery
+Route.get('/creches/:id', 'CrechesController.getOne').middleware('auth') // Return all the nursery
 Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin') // Create one nursery
 Route.post('/creches/:idCreche', 'CrechesController.addNurseryCommand').middleware('isAdmin') // Add the quantity of box asked by the nursery
 Route.delete('/creche/:id', 'CrechesController.deleteOne').middleware('isAdmin')

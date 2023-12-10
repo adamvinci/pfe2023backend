@@ -47,5 +47,12 @@ export default class CreateDeliveryValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'nombreCaisseLingeS.unsigned': 'nombreCaisseLingeS must be >=0',
+    'nombreCaisseLingeM.unsigned': 'nombreCaisseLingeM must be >=0',
+    'nombreCaisseLingeL.unsigned': 'nombreCaisseLingeL must be >=0',
+    'nombreCaisseGant.unsigned': 'nombreCaisseGant must be >=0',
+    'nombreCaisseInsert.unsigned': 'nombreCaisseInsert must be >=0',
+    'nombreCaisseSacPoubelle.unsigned': 'nombreCaisseSacPoubelle must be >=0'
+  }
 }

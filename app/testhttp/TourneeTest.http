@@ -13,13 +13,21 @@ Authorization: Bearer NDk.MNDMCk2N9H32YkLZDdkAnmHv6b6l4VYEsYLVjVZvEYx_Co4mmk_qJ8
 
 
 ### Assign delivery already assigned
-POST {{baseUrl}}/tournees/assignDelivery
+POST {{baseUrl}}/tournees/updateOne
 Content-Type: application/json
-Authorization: Bearer NQ.aLLW-gGDSfQfIQ5Q8UhcOIwJb2UDfjLskXoQL-ulsI-nkdNflnKk_MgcDlzg
+Authorization: Bearer creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)]).members(schema.number([rules.exists({
+      table: 'creches', column: 'id', where: {
+        tournee_id: this.refs.deliveryId,
+        tournee_id : null
+      },
+    })
+    ]),
 
 {
-    "idDelivery":1,
-    "idDeliveryMan":3
+    "deliveryId":1,
+    "nom":"ddzaaaaaaaaaaa",
+    "creches":[1,2,15]
+
 }
 
 

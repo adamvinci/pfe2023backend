@@ -28,10 +28,10 @@ Content-Type: application/json
 ### register livreur with admin token
 POST {{baseUrl}}/auth/register 
 Content-type: application/json
-Authorization: Bearer MTQz.BkQC71iPrJ1t9pFK4CiHL6tm-sXcMlfa4NzKs5rdre0c89bObGjO15p5n5tB
+Authorization: Bearer MzE.8b9LWF2hcM1gx8aZKGHEtW_Wy0PyDWywgxhqqpFx7zczb3KLc4zKkdodX4GR
 
 {
-    "nom": "zzzz",
+    "nom": "zzzzz",
     "password": "123456"
 }
 

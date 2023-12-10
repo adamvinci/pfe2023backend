@@ -2,7 +2,11 @@
 
 ### GET all nursery
 GET {{baseUrl}}/creches
-Authorization: Bearer MTY3.lkZP8UQyTlrAPXukDq4dZkXVu1DduZYikSi43VQYAhRobDwB2Bf3cCSo6njL
+Authorization: Bearer MTg.QU9VDzH8DVBe0nmiPkvnXNqjjvYi31WHk495kLi7QzzZT7H3qJZNAz2YNqPc
+
+### GET one
+GET {{baseUrl}}/creches/5
+Authorization: Bearer MTg.QU9VDzH8DVBe0nmiPkvnXNqjjvYi31WHk495kLi7QzzZT7H3qJZNAz2YNqPc
 
 ### Create one nursery
 POST {{baseUrl}}/creches
