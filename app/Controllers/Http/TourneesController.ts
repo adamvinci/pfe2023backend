@@ -69,6 +69,7 @@ export default class TourneesController {
             return response.badRequest({ message: 'Tournee has already been delivered' })
         }
 
+
         // Update remaining quantity in delivery
         const { nombreCaisseGantLivre, nombreCaisseSacPoubelleLivre, nombreCaisseInsertLivre,
             nombreCaisseLingeLLivre, nombreCaisseLingeMLivre, nombreCaisseLingeSLivre } = payload
@@ -79,23 +80,22 @@ export default class TourneesController {
         const diffNombreCaisseLingeM = nombreCaisseLingeMLivre - creche.nombreCaisseLingeM;
         const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
-        // Update nombreCaisseRestante based on the differences
-        delivery.nombreCaisseGantAPrendre += (diffNombreCaisseGant > 0) ? -diffNombreCaisseGant : diffNombreCaisseGant;
-        delivery.nombreCaisseSacPoubelleAPrendre += (diffNombreCaisseSacPoubelle > 0) ? -diffNombreCaisseSacPoubelle : diffNombreCaisseSacPoubelle;
-        delivery.nombreCaisseInsertAPrendre += (diffNombreCaisseInsert > 0) ? -diffNombreCaisseInsert : diffNombreCaisseInsert;
-        delivery.nombreCaisseLingeLAprendre += (diffNombreCaisseLingeL > 0) ? -diffNombreCaisseLingeL : diffNombreCaisseLingeL;
-        delivery.nombreCaisseLingeMAprendre += (diffNombreCaisseLingeM > 0) ? -diffNombreCaisseLingeM : diffNombreCaisseLingeM;
-        delivery.nombreCaisseLingeSAprendre += (diffNombreCaisseLingeS > 0) ? -diffNombreCaisseLingeS : diffNombreCaisseLingeS;
+        //If one of the requests is negative
+        if(diffNombreCaisseGant>delivery.nombreCaisseGantSupplementaire || diffNombreCaisseSacPoubelle > delivery.nombreCaisseSacPoubelleSupplementaire || diffNombreCaisseInsert>delivery.nombreCaisseInsertSupplementaire ||
+            diffNombreCaisseLingeL>delivery.nombreCaisseLingeLSupplementaire || diffNombreCaisseLingeM>delivery.nombreCaisseLingeMSupplementaire || diffNombreCaisseLingeS>delivery.nombreCaisseLingeSSupplementaire){
+                return response.badRequest({ message: 'not enough extra quantity in stock' })
+            }
 
-         // Update nombreCaisseSupplementaire based on the differences
-        delivery.nombreCaisseGantSupplementaire -= diffNombreCaisseGant;
-        delivery.nombreCaisseSacPoubelleSupplementaire -= diffNombreCaisseSacPoubelle;
-        delivery.nombreCaisseInsertSupplementaire -= diffNombreCaisseInsert;
-        delivery.nombreCaisseLingeLSupplementaire -= diffNombreCaisseLingeL;
-        delivery.nombreCaisseLingeMSupplementaire -= diffNombreCaisseLingeM;
-        delivery.nombreCaisseLingeSSupplementaire -= diffNombreCaisseLingeS;
-        
-        
+
+        // Update nombreCaisseRestante based on the differences
+        delivery.nombreCaisseGantSupplementaire += -diffNombreCaisseGant;
+        delivery.nombreCaisseSacPoubelleSupplementaire += -diffNombreCaisseSacPoubelle;
+        delivery.nombreCaisseInsertSupplementaire += -diffNombreCaisseInsert;
+        delivery.nombreCaisseLingeLSupplementaire += -diffNombreCaisseLingeL;
+        delivery.nombreCaisseLingeMSupplementaire += -diffNombreCaisseLingeM;
+        delivery.nombreCaisseLingeSSupplementaire += -diffNombreCaisseLingeS;
+
+                
         // Update the state and quantity
         await delivery.save();
         creche.isDelivered = true;

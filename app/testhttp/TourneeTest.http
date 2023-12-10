@@ -39,7 +39,7 @@ Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zE
   "nombreCaisseSacPoubelleLivre": 1,
   "nombreCaisseInsertLivre": 1,
   "nombreCaisseLingeLLivre": 1,
-  "nombreCaisseLingeMLivre": 2,
+  "nombreCaisseLingeMLivre": 1,
   "nombreCaisseLingeSLivre": 1
 }
 
@@ -92,6 +92,21 @@ Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zE
   "nombreCaisseLingeSLivre": 1
 }
 
+### update assigned delivery but with not enough extra quantity in stock
+POST  {{baseUrl}}/tournees/updateState
+Content-Type: application/json
+Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
+
+{
+  "nurseryId": 1,
+  "deliveryId": 1,
+  "nombreCaisseGantLivre": 2,
+  "nombreCaisseSacPoubelleLivre": 2,
+  "nombreCaisseInsertLivre": 70,
+  "nombreCaisseLingeLLivre": 2,
+  "nombreCaisseLingeMLivre": 2,
+  "nombreCaisseLingeSLivre": 2
+}
 
 ### DELETE one tournee
 DELETE {{baseUrl}}/tournees/1
