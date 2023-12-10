@@ -1,16 +1,21 @@
-import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, validator, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Creche from 'App/Models/Creche';
 
-/*
-creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)]).members(schema.number([rules.exists({
-      table: 'creches', column: 'id', where: {
-        tournee_id: (this.refs.deliveryId || 'null')
-      },
-    })
-    ])),
-      public refs = schema.refs({
-    deliveryId: this.ctx.request.requestBody.deliveryId
-  })*/
+
+validator.rule('nurseryAlreadyAssigned', async (values, _, options) => {
+  for (const crecheId of values) {
+    const creche = await Creche.find(crecheId);
+    if (creche) {
+      if (creche.tourneeId !== null && creche.tourneeId !== options.root.deliveryId)
+        options.errorReporter.report(
+          'nurseryAlreadyAssigned',
+          `The nursery ${creche.nom} is already associated with a tournee`,
+        )
+    }
+
+  }
+});
 export default class UpdateOneValidator {
   constructor(protected ctx: HttpContextContract) { }
 
@@ -38,8 +43,8 @@ export default class UpdateOneValidator {
     deliveryId: schema.number([rules.unsigned(), rules.exists({ table: 'tournees', column: 'id' })]),
     nom: schema.string.optional([rules.minLength(3), rules.unique({ table: 'tournees', column: 'nom' })]),
     pourcentageSupplementaire: schema.number.optional([rules.unsigned()]),
-    creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)]).members(schema.number([rules.exists({ table: 'creches', column: 'id' })
-    ])),
+    creches: schema.array.optional([rules.nurseryAlreadyAssigned(), rules.distinct('*'), rules.minLength(1)])
+      .members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
   })
 
   /**
@@ -54,7 +59,7 @@ export default class UpdateOneValidator {
    *
    */
   public messages: CustomMessages = {
-    'creches.*.exists': 'This nursery does not exist or is already in a delivery',
+    'creches.*.exists': 'This nursery does not exist',
     'pourcentageSupplementaire.unsigned': 'Pourcentage must be >=0'
   }
 

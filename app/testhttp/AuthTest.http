@@ -61,7 +61,7 @@ Content-type: application/json
 Authorization: Bearer MzE.aDC06jkCHF9SJwY0z3MAt8krutdnFw5QSbcntQCblx9qLnGsuISfInDBRujz
 
 {
-    "idUser": "2",
+    "idUser": 2,
     "password": "livreur1"
 }
 
@@ -71,7 +71,7 @@ Content-type: application/json
 Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
 
 {
-    "idUser": "2",
+    "idUser": 2,
     "password": "livreur2"
 }
 
@@ -81,7 +81,7 @@ Content-type: application/json
 Authorization: Bearer OA.LQyKXZnFdYTgNjcVqolV7Amsryu2Ib8nhVGnOopr63v5fNEdrLXVLcLzq9py
 
 {
-    "idUser": "2",
+    "idUser": 2,
     "password": "livreur2"
 }
 

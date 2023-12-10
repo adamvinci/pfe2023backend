@@ -136,29 +136,16 @@ export default class TourneesController {
 
     public async updateOne({ response, request }: HttpContextContract) {
         const payload = await request.validate(UpdateOneValidator)
-        //verify if the nursery already has a tournee associated
-        if (payload.creches) {
-            for (const crecheId of payload.creches) {
-                const creche = await Creche.findOrFail(crecheId);
-                if (creche.tourneeId !== null && creche.tourneeId !== payload.deliveryId)
-                    return response.badRequest({ message: 'This nursery is already assigned to a delivery' })
-            }
-        }
         const tournee = await Tournee.findOrFail(payload.deliveryId);
         tournee.nom = payload.nom ?? tournee.nom;
         tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire ?? tournee.pourcentageSupplementaire;
         await Database.transaction(async (trx) => {
             if (payload.creches) {
-                const oldCreches = await Creche.query().where("tourneeId", tournee.id)
-                for (const creche of oldCreches) {
-                    creche.$attributes.tourneeId = null
-                    creche.useTransaction(trx).save()
-                }
-                for (const crecheId of payload.creches) {
-                    const creche = await Creche.findOrFail(crecheId);
-                    creche.tourneeId = payload.deliveryId
-                    creche.useTransaction(trx).save()
-                }
+                await Creche.query().useTransaction(trx).where('tourneeId', tournee.id).whereNotIn('id', payload.creches)
+                    .update({ tourneeId: null });
+                await Creche.query().useTransaction(trx).whereIn('id', payload.creches)
+                    .update({ tourneeId: payload.deliveryId });
+
             }
             await tournee.useTransaction(trx).save();
         })

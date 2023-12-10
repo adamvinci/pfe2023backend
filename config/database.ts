@@ -31,6 +31,11 @@ const databaseConfig: DatabaseConfig = {
         password: Env.get('PG_PASSWORD', ''),
         database: Env.get('PG_DB_NAME'),
       },
+      pool: {
+        min: 2,    // Minimum number of connections in the pool
+        max: 5,   // Maximum number of connections in the pool
+        acquireTimeoutMillis: 60 * 1000,  //if a query is unable to acquire a database connection from the pool within 60 seconds it throw in a timeout error
+      },
       migrations: {
         naturalSort: true,
       },
