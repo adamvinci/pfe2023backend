@@ -4,10 +4,10 @@
 ### Create delivery 
 POST {{baseUrl}}/tournees
 Content-Type: application/json
-Authorization: Bearer NDk.MNDMCk2N9H32YkLZDdkAnmHv6b6l4VYEsYLVjVZvEYx_Co4mmk_qJ8tuZj8P
+Authorization: Bearer Ng.4Ty9jWMC30-GV_CBt3m8h6Vk83uc-buahheT_OoQpioRumhdqKEDOL6Ed0Qc
 
 {
-    "creches":[30,32],
+    "creches":[30,30],
     "nom":"Tournee bclia8"
 }
 
@@ -15,18 +15,12 @@ Authorization: Bearer NDk.MNDMCk2N9H32YkLZDdkAnmHv6b6l4VYEsYLVjVZvEYx_Co4mmk_qJ8
 ### Assign delivery already assigned
 POST {{baseUrl}}/tournees/updateOne
 Content-Type: application/json
-Authorization: Bearer creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)]).members(schema.number([rules.exists({
-      table: 'creches', column: 'id', where: {
-        tournee_id: this.refs.deliveryId,
-        tournee_id : null
-      },
-    })
-    ]),
+Authorization: Bearer Ng.4Ty9jWMC30-GV_CBt3m8h6Vk83uc-buahheT_OoQpioRumhdqKEDOL6Ed0Qc
 
 {
     "deliveryId":1,
-    "nom":"ddzaaaaaaaaaaa",
-    "creches":[1,2,15]
+    "nom":"ddzaaaaaaaaaaaa",
+    "creches":[11,11]
 
 }
 
