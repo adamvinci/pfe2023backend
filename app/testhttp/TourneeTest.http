@@ -4,23 +4,23 @@
 ### Create delivery 
 POST {{baseUrl}}/tournees
 Content-Type: application/json
-Authorization: Bearer Ng.4Ty9jWMC30-GV_CBt3m8h6Vk83uc-buahheT_OoQpioRumhdqKEDOL6Ed0Qc
+Authorization: Bearer MjQ.UV5q4ZblM99qAQI5mXafJe_rRs96COCoBaHWLpb7zzTkTTfRSKwTQKscqbQO
 
 {
-    "creches":[30,30],
-    "nom":"Tournee bclia8"
+    "creches":[23,24],
+    "nom":"Tournee flopp"
 }
 
 
 ### Assign delivery already assigned
 POST {{baseUrl}}/tournees/updateOne
 Content-Type: application/json
-Authorization: Bearer Ng.4Ty9jWMC30-GV_CBt3m8h6Vk83uc-buahheT_OoQpioRumhdqKEDOL6Ed0Qc
+Authorization: Bearer NQ.Qp_XIUMWJ-wrVZ-D9aPWdLvFWywjxJu5g7s97ahJYo23OwzlIynzWTMxatA7
 
 {
     "deliveryId":1,
     "nom":"ddzaaaaaaaaaaaa",
-    "creches":[11,11]
+    "creches":[14,15]
 
 }
 
@@ -32,17 +32,17 @@ Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_
 ### update assigned delivery 
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zEsoSuz8
+Authorization: Bearer OA.CddsYk3P5BICwFW-ceARTfhNJ6KrpOyZaF0uMvJf6h_A5HsCZDqH-B3nQXlo
 
 {
-  "nurseryId": 1,
-  "deliveryId": 1,
-  "nombreCaisseGantLivre": 1,
-  "nombreCaisseSacPoubelleLivre": 1,
-  "nombreCaisseInsertLivre": 1,
-  "nombreCaisseLingeLLivre": 1,
+  "nurseryId": 10,
+  "deliveryId": 2,
+  "nombreCaisseGantLivre": 0,
+  "nombreCaisseSacPoubelleLivre": 6,
+  "nombreCaisseInsertLivre": 0,
+  "nombreCaisseLingeLLivre": 0,
   "nombreCaisseLingeMLivre": 1,
-  "nombreCaisseLingeSLivre": 1
+  "nombreCaisseLingeSLivre": 0
 }
 
 ### update already delivered delivery
@@ -111,6 +111,6 @@ Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zE
 }
 
 ### DELETE one tournee
-DELETE {{baseUrl}}/tournees/1
-Authorization: Bearer MTY5.SG3JtINMEqAwYcfH_XXs5LJeprH2EITVozXYv8bfA4M-pWBSE3oQefYCSNfH
+DELETE {{baseUrl}}/tournees/2
+Authorization: Bearer MTU.U-j67yYWgCs9HV8mJap45d8vci6WQcIjTENSsblZruyY8Ntjv2F7ergBYpk6
 

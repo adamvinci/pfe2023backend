@@ -17,7 +17,7 @@ export default class UserController {
     const livreur = await User.find(idUser)
     if (livreur == null) return response.notFound();
     if (livreur.isAdmin) return response.forbidden({ message: "This user cannot be deleted" });
-    livreur.delete()
+    await livreur.delete()
     return response.ok({ message: "User deleted" });
   }
 

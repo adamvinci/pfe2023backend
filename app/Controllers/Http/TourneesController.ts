@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database';
 import Creche from 'App/Models/Creche';
 import Tournee from 'App/Models/Tournee'
 import CreateValidator from 'App/Validators/Tournee/CreateValidator';
@@ -22,18 +23,19 @@ export default class TourneesController {
         const payload = await request.validate(CreateValidator);
         //create tournee without delivery man
         const tournee = new Tournee();
-        tournee.nom = payload.nom
-        await tournee.save();
-        const tourneeId = tournee.$attributes.id
-
-        //assign tourneesid to nursery
-        const { creches } = payload;
-        creches.forEach(async (id) => {
-            const creche = await Creche.findOrFail(id);
-            creche.tourneeId = tourneeId;
-            await creche?.save();
+        await Database.transaction(async (trx) => {
+            tournee.nom = payload.nom
+            await tournee.useTransaction(trx).save();
+            const tourneeId = tournee.$attributes.id
+            //assign tourneesid to nursery
+            const { creches } = payload;
+            for (const id of creches) {
+                const creche = await Creche.findOrFail(id);
+                creche.tourneeId = tourneeId;
+                await creche.useTransaction(trx).save();
+            }
         })
-        const createdTournee = await Tournee.query().where('id', tourneeId).preload('user').preload('creches')
+        const createdTournee = await Tournee.query().where('id', tournee.id).preload('user').preload('creches')
         return response.ok({ createdTournee })
     }
 
@@ -93,9 +95,6 @@ export default class TourneesController {
         } else if (diffNombreCaisseLingeS > delivery.nombreCaisseLingeSSupplementaire) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeSSupplementaire' });
         }
-
-
-
         // Update nombreCaisseRestante based on the differences
         delivery.nombreCaisseGantSupplementaire += -diffNombreCaisseGant;
         delivery.nombreCaisseSacPoubelleSupplementaire += -diffNombreCaisseSacPoubelle;
@@ -104,11 +103,13 @@ export default class TourneesController {
         delivery.nombreCaisseLingeMSupplementaire += -diffNombreCaisseLingeM;
         delivery.nombreCaisseLingeSSupplementaire += -diffNombreCaisseLingeS;
 
+        await Database.transaction(async (trx) => {
+            // Update the state and quantity
+            await delivery.useTransaction(trx).save();
+            creche.isDelivered = true;
+            await creche.useTransaction(trx).save();
+        })
 
-        // Update the state and quantity
-        await delivery.save();
-        creche.isDelivered = true;
-        await creche.save();
         return response.ok({ delivery })
     }
 
@@ -119,13 +120,17 @@ export default class TourneesController {
         const tournee = await Tournee.find(idDelivery)
         if (tournee == null) return response.notFound();
         const creches = await Creche.query().where('tourneeId', tournee.$attributes.id);
-        if (creches) {
-            for (const creche of creches) {
-                creche.$attributes.tourneeId = null;
-                await creche.save();
+        await Database.transaction(async (trx) => {
+            if (creches) {
+                for (const creche of creches) {
+                    creche.$attributes.tourneeId = null;
+                    await creche.useTransaction(trx).save();
+                }
+
             }
-        }
-        tournee.delete()
+            await tournee.useTransaction(trx).delete()
+        })
+
         return response.ok({ message: "Delivery deleted" });
     }
 
@@ -142,19 +147,21 @@ export default class TourneesController {
         const tournee = await Tournee.findOrFail(payload.deliveryId);
         tournee.nom = payload.nom ?? tournee.nom;
         tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire ?? tournee.pourcentageSupplementaire;
-        if (payload.creches) {
-            const oldCreches = await Creche.query().where("tourneeId", tournee.id)
-            for (const creche of oldCreches) {
-                creche.$attributes.tourneeId = null
-                creche.save()
+        await Database.transaction(async (trx) => {
+            if (payload.creches) {
+                const oldCreches = await Creche.query().where("tourneeId", tournee.id)
+                for (const creche of oldCreches) {
+                    creche.$attributes.tourneeId = null
+                    creche.useTransaction(trx).save()
+                }
+                for (const crecheId of payload.creches) {
+                    const creche = await Creche.findOrFail(crecheId);
+                    creche.tourneeId = payload.deliveryId
+                    creche.useTransaction(trx).save()
+                }
             }
-            for (const crecheId of payload.creches) {
-                const creche = await Creche.findOrFail(crecheId);
-                creche.tourneeId = payload.deliveryId
-                creche.save()
-            }
-        }
-        await tournee.save();
+            await tournee.useTransaction(trx).save();
+        })
         return response.ok({ message: "Delivery has been succesfully updated" })
     }
 
