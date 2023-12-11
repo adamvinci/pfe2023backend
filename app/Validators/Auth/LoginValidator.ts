@@ -39,5 +39,7 @@ export default class LoginValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    required: `{{field}} is required`,
+  }
 }

@@ -13,16 +13,16 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"livreur1",
-    "password":"livreur1"
+    "nom":"livreur2",
+    "password":"12345"
 }
 ### login livreur
 POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"livreur2",
-    "password":"livreur1"
+    "nom":"livreur1",
+    "password":"12345"
 }
 
 ### register livreur with admin token
@@ -58,7 +58,7 @@ Authorization: Bearer Mg.AQ1QFjKTND98QLsfCCKr1zmjRYN6t2mYL7BUNg3PUBIhXWxICmKEyf5
 ### Change user password with user token
 POST {{baseUrl}}/auth/updatePassword 
 Content-type: application/json
-Authorization: Bearer MzE.aDC06jkCHF9SJwY0z3MAt8krutdnFw5QSbcntQCblx9qLnGsuISfInDBRujz
+Authorization: Bearer MTAx.oXybFj01UtxxiSR9S2893yCHxdZW4yn-jkfoPl3Hk1wKq581OF4gYLDaTdA1
 
 {
     "idUser": 2,
@@ -68,10 +68,10 @@ Authorization: Bearer MzE.aDC06jkCHF9SJwY0z3MAt8krutdnFw5QSbcntQCblx9qLnGsuISfIn
 ### Change user password with admin token
 POST {{baseUrl}}/auth/updatePassword 
 Content-type: application/json
-Authorization: Bearer MQ.y1wCgWiVFg9Bbf_3VIyj7nKwMLuzrMCinz5yKbWqkfPWJQeOOZa9B2nuGr_U
+Authorization: Bearer Mg.bwAgn29bfVzUIZyJ2AKnpYzviRjJ20gFuw5FF3i-dN2-CYB8c0_9gJ94R1mA
 
 {
-    "idUser": 2,
+    "idUser": 3,
     "password": "livreur2"
 }
 
@@ -91,8 +91,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"hahatudoisecriretoutcadansleloginpourteconnecter2",
-    "password":"livreur1"
+    "nom":"livreur2",
+    "password":"livreur2"
 }
 
 ### try to connect with new password
@@ -123,8 +123,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "eail":"livreur1@hotmail.com",
-    "passwrd":"livreur1"
+    "nom":"livreur1",
+    "password":"livreur1"
 }
 
 ### test resetpassword with a non admin email

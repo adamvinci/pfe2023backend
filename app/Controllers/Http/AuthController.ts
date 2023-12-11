@@ -6,9 +6,9 @@ import ResetPasswordValidator from 'App/Validators/Auth/ResetPasswordValidator'
 import StoreUserValidator from 'App/Validators/Auth/StoreUserValidator'
 import { string } from '@ioc:Adonis/Core/Helpers'
 import Mail from '@ioc:Adonis/Addons/Mail'
+
 export default class AuthController {
   public async register({ request, response }: HttpContextContract) {
-    console.log("1")
     const payload = await request.validate(StoreUserValidator)
 
     const user = await User.create(payload)
@@ -21,16 +21,14 @@ export default class AuthController {
 
     const token = await auth.attempt(nom, password)
     const user = await User.findBy("nom", nom);
-
     return response.ok({ token, user })
   }
 
   // Admin can change password of user and his password
-  public async updatePassword({ auth, request, response }: HttpContextContract) {
+  public async updatePassword({ request, response }: HttpContextContract) {
     const { idUser, password } = await request.validate(ChangePasswordValidator)
 
     const user = await User.findOrFail(idUser);
-    if (user.isAdmin && (auth.user!.id !== user.id)) return response.forbidden({ messge: "You cant change the password of another admin" })
     user.password = password;
     await user.save();
 
@@ -41,7 +39,6 @@ export default class AuthController {
   public async forgotPassword({ response, request }: HttpContextContract) {
     const payload = await request.validate(ResetPasswordValidator)
     const user = await User.findByOrFail("nom", payload.email);
-    console.log(user?.$attributes.isAdmin)
     if (!user.$attributes.isAdmin) return response.forbidden({ message: "You cant reset this user password" });
     const newPassword = string.generateRandom(5);
 
@@ -99,6 +96,6 @@ export default class AuthController {
                 </html>`)
 
     })
-    return response.ok({ email: 'If this email exist you will receive a new password by email' })
+    return response.ok({ message: 'If this email exist you will receive a new password on it' })
   }
 }

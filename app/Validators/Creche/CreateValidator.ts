@@ -42,5 +42,9 @@ export default class CreateValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'adresse.unique': 'This adresse already exists',
+    required: `{{field}} is required`,
+    minLength: `{{field}} must be at least have {{options.minLength}} caracteres`,
+  }
 }

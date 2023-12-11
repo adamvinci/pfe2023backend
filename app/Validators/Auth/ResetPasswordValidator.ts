@@ -24,7 +24,7 @@ export default class ResetPasswordValidator {
    *    ```
    */
   public schema = schema.create({
-    email: schema.string({}, [rules.email(), rules.exists({ table: 'users', column: 'nom' })]),
+    email: schema.string({}, [rules.email(), rules.exists({ table: 'users', column: 'nom', where: { is_admin: true } })]),
   })
 
   /**
@@ -38,5 +38,8 @@ export default class ResetPasswordValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'email.required': 'Email is required',
+    'email.exists': 'User does not exist or is not an admin'
+  }
 }

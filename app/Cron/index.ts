@@ -1,3 +1,4 @@
+import Database from "@ioc:Adonis/Lucid/Database";
 import Creche from "App/Models/Creche";
 import Tournee from "App/Models/Tournee";
 
@@ -41,12 +42,15 @@ cron.schedule('59 10 5 * * *', async function () {
         tournee.nombreCaisseInsertSupplementaire = Math.round(sumAttributes.nombreCaisseInsertSum * percentageFactor);
         tournee.nombreCaisseSacPoubelleSupplementaire = Math.round(sumAttributes.nombreCaisseSacPoubelleSum * percentageFactor);
         // Save the updated delivery
-        await tournee.save();
+        await Database.transaction(async (trx) => {
+            await tournee.useTransaction(trx).save();
 
-        for (const creche of creches) {
-            creche.isDelivered = false;
-            await creche.save();
-        }
+            for (const creche of creches) {
+                creche.isDelivered = false;
+                await creche.useTransaction(trx).save();
+            }
+        })
+
         console.log(` ${tournee.$attributes.nom} updated for today`)
     }
 

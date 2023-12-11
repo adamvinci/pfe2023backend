@@ -40,5 +40,8 @@ export default class ChangePasswordValidator {
    *
    */
   public messages: CustomMessages = {
+    'password.minLength': "New Password need to have at least 5 caracteres",
+    'idUser.exists': 'This user does not exist',
+    required: `{{field}} is required`,
   }
 }

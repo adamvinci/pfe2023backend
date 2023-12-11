@@ -55,5 +55,8 @@ export default class AssignDeliveryValidator {
    * }
    *
    */
-  public messages: CustomMessages = {}
+  public messages: CustomMessages = {
+    'idDelivery.exists': 'This tournee does not exists',
+    'idDeliveryMan.exists': 'This user does not exists or cant be assigned to a delivery'
+  }
 }

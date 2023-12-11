@@ -59,8 +59,11 @@ export default class UpdateOneValidator {
    *
    */
   public messages: CustomMessages = {
+    required: `{{field}} must be >=0`,
+    unsigned: `{{field}} must be >=0`,
+    minLength: `{{field}} must be at least {{options.minLength}} long`,
     'creches.*.exists': 'This nursery does not exist',
-    'pourcentageSupplementaire.unsigned': 'Pourcentage must be >=0'
+    'nom.unique': 'This name is already taken'
   }
 
 

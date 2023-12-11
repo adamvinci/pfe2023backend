@@ -41,6 +41,7 @@ export default class StoreUserValidator {
    */
   public messages: CustomMessages = {
     'nom.unique': 'Name must be unique',
-    'password.minLength': "Password need to have at least 5 caracteres"
+    'password.minLength': "Password need to have at least 5 caracteres",
+    required: `{{field}} is required`,
   }
 }
