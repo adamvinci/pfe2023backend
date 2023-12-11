@@ -47,6 +47,7 @@ export default class UpdateCommandValidator {
    */
   public messages: CustomMessages = {
     unsigned: `{{field}} must be >=0`,
-    exists: `This {{field}} does not exist`
+    exists: `This {{field}} does not exist`,
+    required: `This {{field}} is required`
   }
 }
