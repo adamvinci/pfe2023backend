@@ -50,7 +50,7 @@ export default class CreateValidator {
   public messages: CustomMessages = {
     unsigned: `{{field}} must be >=0`,
     minLength: `{{field}} must be at least {{options.minLength}} long`,
-    'creches.*.exists': 'This nursery does not exist or is already in a delivery',
+    'creches.*.exists': 'You cant choose a nursery with a tournee',
     'nom.unique': 'This name is already taken',
 
   }

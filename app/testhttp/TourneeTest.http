@@ -15,12 +15,12 @@ Authorization: Bearer MjQ.UV5q4ZblM99qAQI5mXafJe_rRs96COCoBaHWLpb7zzTkTTfRSKwTQK
 ### Assign delivery already assigned
 POST {{baseUrl}}/tournees/updateOne
 Content-Type: application/json
-Authorization: Bearer MQ.eA6Y77U10tGMyOlgKybWCZbVEOBkdly5QF-urW0o-qrDSDLgo86d_GGBSr9W
+Authorization: Bearer MQ.9czi3rq95aeompZlnRkYI9SxnlDHYb-ihPe0DQQaeg2MAVUpV1Y_zKEWLbo9
 
 {
-    "deliveryId":2,
-    "nom":"ddzaaaaaaaaaaaaaaaaaaaaaaaaa",
-    "creches":[11,15,14]
+    "deliveryId":1,
+    "nom":"ddzaaaaaaaaaaaaaaaa",
+    "creches":[3,10]
 
 }
 

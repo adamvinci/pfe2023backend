@@ -1,11 +1,12 @@
-import { schema, rules, validator, CustomMessages } from '@ioc:Adonis/Core/Validator'
+import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Creche from 'App/Models/Creche';
+/*import Creche from 'App/Models/Creche';
 
 
 validator.rule('nurseryAlreadyAssigned', async (values, _, options) => {
   for (const crecheId of values) {
     const creche = await Creche.find(crecheId);
+    console.log(creche)
     if (creche) {
       if (creche.tourneeId !== null && creche.tourneeId !== options.root.deliveryId)
         options.errorReporter.report(
@@ -15,7 +16,7 @@ validator.rule('nurseryAlreadyAssigned', async (values, _, options) => {
     }
 
   }
-});
+});*/
 export default class UpdateOneValidator {
   constructor(protected ctx: HttpContextContract) { }
 
@@ -43,7 +44,7 @@ export default class UpdateOneValidator {
     deliveryId: schema.number([rules.unsigned(), rules.exists({ table: 'tournees', column: 'id' })]),
     nom: schema.string.optional([rules.minLength(3), rules.unique({ table: 'tournees', column: 'nom' })]),
     pourcentageSupplementaire: schema.number.optional([rules.unsigned()]),
-    creches: schema.array.optional([rules.nurseryAlreadyAssigned(), rules.distinct('*'), rules.minLength(1)])
+    creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)])
       .members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
   })
 

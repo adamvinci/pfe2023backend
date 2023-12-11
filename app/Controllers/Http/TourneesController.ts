@@ -136,6 +136,18 @@ export default class TourneesController {
 
     public async updateOne({ response, request }: HttpContextContract) {
         const payload = await request.validate(UpdateOneValidator)
+        if (payload.creches) {
+            let invalidCreches = '';
+            for (const crecheId of payload.creches) {
+                const creche = await Creche.findOrFail(crecheId);
+                if (creche.tourneeId !== null && creche.tourneeId !== payload.deliveryId) {
+                    invalidCreches += (creche.$attributes.nom) + ", "
+                }
+            }
+            if (invalidCreches !== '') {
+                return response.badRequest({ message: `These nursery are already in a tournee: ${invalidCreches}` })
+            }
+        }
         const tournee = await Tournee.findOrFail(payload.deliveryId);
         tournee.nom = payload.nom ?? tournee.nom;
         tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire ?? tournee.pourcentageSupplementaire;
