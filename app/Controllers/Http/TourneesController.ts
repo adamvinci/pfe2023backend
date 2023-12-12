@@ -48,22 +48,26 @@ export default class TourneesController {
 
         const payload = await request.validate(UpdateCommandValidator)
         const { nurseryId } = payload
-        const { deliveryId } = payload;
         // Check if this delivery is assigned to this user
-        const delivery = await Tournee.query()
-            .where('id', deliveryId)
+        const allDeliveries = await Tournee.query()
             .where('user_id', userId.id)
-            .first()
+        
 
-        if (delivery == null) {
+        if (allDeliveries == null) {
             return response.notFound({ message: 'You cannot update this delivery' });
         }
 
         const creche = await Creche.findOrFail(nurseryId)
-
-        if (creche.tourneeId !== deliveryId) {
-            return response.badRequest({ message: 'This nursery is not assigned to this delivery' })
+        let liv=0;
+        for(let i = 0; i < allDeliveries.length; i++){
+            if (creche.tourneeId == allDeliveries[i].id) {
+                liv++;
+            }
         }
+        if (liv==0) {
+            return response.badRequest({ message: 'This nursery is not assigned to those deliveries' })
+        }
+        
 
         //si y'a une erreur d'encodage?
         if (creche.isDelivered) {
@@ -71,46 +75,128 @@ export default class TourneesController {
         }
 
 
-        // Update remaining quantity in delivery
-        const { nombreCaisseGantLivre, nombreCaisseSacPoubelleLivre, nombreCaisseInsertLivre,
-            nombreCaisseLingeLLivre, nombreCaisseLingeMLivre, nombreCaisseLingeSLivre } = payload
-        const diffNombreCaisseGant = nombreCaisseGantLivre - creche.nombreCaisseGant;
-        const diffNombreCaisseSacPoubelle = nombreCaisseSacPoubelleLivre - creche.nombreCaisseSacPoubelle;
-        const diffNombreCaisseInsert = nombreCaisseInsertLivre - creche.nombreCaisseInsert;
-        const diffNombreCaisseLingeL = nombreCaisseLingeLLivre - creche.nombreCaisseLingeL;
-        const diffNombreCaisseLingeM = nombreCaisseLingeMLivre - creche.nombreCaisseLingeM;
-        const diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
 
-        //Check if one of the requests is negative
-        if (diffNombreCaisseGant > delivery.nombreCaisseGantSupplementaire) {
+        // Objets pour stocker les quantités supplémentaires de chaque type de caisse
+        let stockSupplementaire = {
+            nombreCaisseGant: 0,
+            nombreCaisseSacPoubelle: 0,
+            nombreCaisseInsert: 0,
+            nombreCaisseLingeL: 0,
+            nombreCaisseLingeM: 0,
+            nombreCaisseLingeS: 0,
+        };
+
+        // Récupération des données validées du payload
+        const {
+            nombreCaisseGantLivre,
+            nombreCaisseSacPoubelleLivre,
+            nombreCaisseInsertLivre,
+            nombreCaisseLingeLLivre,
+            nombreCaisseLingeMLivre,
+            nombreCaisseLingeSLivre,
+        } = payload;
+
+        let diffNombreCaisseGant = nombreCaisseGantLivre - creche.nombreCaisseGant;
+        let diffNombreCaisseSacPoubelle = nombreCaisseSacPoubelleLivre - creche.nombreCaisseSacPoubelle;
+        let diffNombreCaisseInsert = nombreCaisseInsertLivre - creche.nombreCaisseInsert;
+        let diffNombreCaisseLingeL = nombreCaisseLingeLLivre - creche.nombreCaisseLingeL;
+        let diffNombreCaisseLingeM = nombreCaisseLingeMLivre - creche.nombreCaisseLingeM;
+        let diffNombreCaisseLingeS = nombreCaisseLingeSLivre - creche.nombreCaisseLingeS;
+
+        // Calcul de la somme totale des caisses supplémentaires de toutes les tournées
+        for (let i = 0; i < allDeliveries.length; i++) {
+            stockSupplementaire.nombreCaisseGant += allDeliveries[i].nombreCaisseGantSupplementaire;
+            stockSupplementaire.nombreCaisseSacPoubelle += allDeliveries[i].nombreCaisseSacPoubelleSupplementaire;
+            stockSupplementaire.nombreCaisseInsert += allDeliveries[i].nombreCaisseInsertSupplementaire;
+            stockSupplementaire.nombreCaisseLingeL += allDeliveries[i].nombreCaisseLingeLSupplementaire;
+            stockSupplementaire.nombreCaisseLingeM += allDeliveries[i].nombreCaisseLingeMSupplementaire;
+            stockSupplementaire.nombreCaisseLingeS += allDeliveries[i].nombreCaisseLingeSSupplementaire;
+            
+            if (diffNombreCaisseGant != 0) {
+                if(allDeliveries[i].nombreCaisseGantSupplementaire>diffNombreCaisseGant) {
+                    allDeliveries[i].nombreCaisseGantSupplementaire+= -diffNombreCaisseGant;
+                    diffNombreCaisseGant=0;
+                }else{
+                    diffNombreCaisseGant-=allDeliveries[i].nombreCaisseGantSupplementaire;
+                    allDeliveries[i].nombreCaisseGantSupplementaire=0;
+                }
+            } else if (diffNombreCaisseSacPoubelle != 0) {
+                if(allDeliveries[i].nombreCaisseSacPoubelleSupplementaire>diffNombreCaisseSacPoubelle) {
+                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire+= -diffNombreCaisseSacPoubelle;
+                    diffNombreCaisseSacPoubelle=0;
+                }else{
+                    diffNombreCaisseSacPoubelle-=allDeliveries[i].nombreCaisseSacPoubelleSupplementaire;
+                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire=0;
+                }
+            } else if (diffNombreCaisseInsert != 0) {
+                if(allDeliveries[i].nombreCaisseInsertSupplementaire>diffNombreCaisseInsert) {
+                    allDeliveries[i].nombreCaisseInsertSupplementaire+= -diffNombreCaisseInsert;
+                    diffNombreCaisseInsert=0;
+                }else{
+                    diffNombreCaisseInsert-=allDeliveries[i].nombreCaisseInsertSupplementaire;
+                    allDeliveries[i].nombreCaisseInsertSupplementaire=0;
+                }
+            } else if (diffNombreCaisseLingeL != 0) {
+                if(allDeliveries[i].nombreCaisseLingeLSupplementaire>diffNombreCaisseLingeL) {
+                    allDeliveries[i].nombreCaisseLingeLSupplementaire+= -diffNombreCaisseLingeL;
+                    diffNombreCaisseLingeL=0;
+                }else{
+                    diffNombreCaisseLingeL-=allDeliveries[i].nombreCaisseLingeLSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeLSupplementaire=0;
+                }
+
+            } else if (diffNombreCaisseLingeM != 0) {
+                if(allDeliveries[i].nombreCaisseLingeMSupplementaire>diffNombreCaisseLingeM) {
+                    allDeliveries[i].nombreCaisseLingeMSupplementaire+= -diffNombreCaisseLingeM;
+                    diffNombreCaisseLingeM=0;
+                }else{
+                    diffNombreCaisseLingeM-=allDeliveries[i].nombreCaisseLingeMSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeMSupplementaire=0;
+                }
+
+            } else if (diffNombreCaisseLingeS != 0) {
+                if(allDeliveries[i].nombreCaisseLingeSSupplementaire>diffNombreCaisseLingeS) {
+                    allDeliveries[i].nombreCaisseLingeSSupplementaire+= -diffNombreCaisseLingeS;
+                    diffNombreCaisseLingeS=0;
+                }else{
+                    diffNombreCaisseLingeS-=allDeliveries[i].nombreCaisseLingeSSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeSSupplementaire=0;
+                }
+            }
+
+        }
+        
+        //verification si la demande a completement abouti
+        if (diffNombreCaisseGant > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseGantSupplementaire' });
-        } else if (diffNombreCaisseSacPoubelle > delivery.nombreCaisseSacPoubelleSupplementaire) {
+        } else if (diffNombreCaisseSacPoubelle > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseSacPoubelleSupplementaire' });
-        } else if (diffNombreCaisseInsert > delivery.nombreCaisseInsertSupplementaire) {
+        } else if (diffNombreCaisseInsert > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseInsertSupplementaire' });
-        } else if (diffNombreCaisseLingeL > delivery.nombreCaisseLingeLSupplementaire) {
+        } else if (diffNombreCaisseLingeL > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeLSupplementaire' });
-        } else if (diffNombreCaisseLingeM > delivery.nombreCaisseLingeMSupplementaire) {
+        } else if (diffNombreCaisseLingeM > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeMSupplementaire' });
-        } else if (diffNombreCaisseLingeS > delivery.nombreCaisseLingeSSupplementaire) {
+        } else if (diffNombreCaisseLingeS > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeSSupplementaire' });
         }
-        // Update nombreCaisseRestante based on the differences
-        delivery.nombreCaisseGantSupplementaire += -diffNombreCaisseGant;
-        delivery.nombreCaisseSacPoubelleSupplementaire += -diffNombreCaisseSacPoubelle;
-        delivery.nombreCaisseInsertSupplementaire += -diffNombreCaisseInsert;
-        delivery.nombreCaisseLingeLSupplementaire += -diffNombreCaisseLingeL;
-        delivery.nombreCaisseLingeMSupplementaire += -diffNombreCaisseLingeM;
-        delivery.nombreCaisseLingeSSupplementaire += -diffNombreCaisseLingeS;
+        
 
         await Database.transaction(async (trx) => {
-            // Update the state and quantity
-            await delivery.useTransaction(trx).save();
+            for (const updatedDelivery of allDeliveries) {
+                await Tournee.query(trx)
+                    .where('id', updatedDelivery.id)
+                    .update({
+                        nombreCaisseGantSupplementaire: updatedDelivery.nombreCaisseGantSupplementaire,
+                        nombreCaisseSacPoubelleSupplementaire: updatedDelivery.nombreCaisseSacPoubelleSupplementaire,
+                    });
+            }
+    
             creche.isDelivered = true;
             await creche.useTransaction(trx).save();
-        })
+        });
 
-        return response.ok({ delivery })
+        return response.ok({ allDeliveries })
     }
 
 

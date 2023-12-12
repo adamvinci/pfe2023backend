@@ -32,17 +32,16 @@ Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_
 ### update assigned delivery 
 POST  {{baseUrl}}/tournees/updateState
 Content-Type: application/json
-Authorization: Bearer OA.CddsYk3P5BICwFW-ceARTfhNJ6KrpOyZaF0uMvJf6h_A5HsCZDqH-B3nQXlo
+Authorization: Bearer NQ.tx6XfBZoKWE2m0Dt25CYnAmM2bPRwJnDmMbjHImfEEiHtqu1WvAMtygGr_qQ
 
 {
-  "nurseryId": 10,
-  "deliveryId": 2,
+  "nurseryId": 15,
   "nombreCaisseGantLivre": 0,
-  "nombreCaisseSacPoubelleLivre": 6,
-  "nombreCaisseInsertLivre": 0,
-  "nombreCaisseLingeLLivre": 0,
+  "nombreCaisseSacPoubelleLivre": 1,
+  "nombreCaisseInsertLivre": 1,
+  "nombreCaisseLingeLLivre": 1,
   "nombreCaisseLingeMLivre": 1,
-  "nombreCaisseLingeSLivre": 0
+  "nombreCaisseLingeSLivre": 1
 }
 
 ### update already delivered delivery
