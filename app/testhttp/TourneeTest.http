@@ -4,30 +4,31 @@
 ### Create delivery 
 POST {{baseUrl}}/tournees
 Content-Type: application/json
-Authorization: Bearer MjQ.UV5q4ZblM99qAQI5mXafJe_rRs96COCoBaHWLpb7zzTkTTfRSKwTQKscqbQO
+Authorization: Bearer MQ.HuWfNXJWZb4RIowq9FJeb8W_4lhi8h5BOYVBF2Jmn1rs-pQMBRf2C6g2UQCM
 
 {
-    "creches":[23,24],
-    "nom":"Tournee flopp"
+    "creches":[15,14],
+    "nom":"Tournnnn",
+    "pourcentageSupplementaire":50
 }
 
 
 ### Assign delivery already assigned
 POST {{baseUrl}}/tournees/updateOne
 Content-Type: application/json
-Authorization: Bearer MQ.9czi3rq95aeompZlnRkYI9SxnlDHYb-ihPe0DQQaeg2MAVUpV1Y_zKEWLbo9
+Authorization: Bearer MQ.HuWfNXJWZb4RIowq9FJeb8W_4lhi8h5BOYVBF2Jmn1rs-pQMBRf2C6g2UQCM
 
 {
     "deliveryId":1,
-    "nom":"ddzaaaaaaaaaaaaaaaa",
-    "creches":[3,10]
+    "nom":"ddzaaaaaaaaaaaaaaa",
+    "creches":[1,2,8]
 
 }
 
 
 ### get all with user 2 token
-GET  {{baseUrl}}/tournees
-Authorization: Bearer Mw.e6LH42nwjjRsLB2uS0mqMIWGMsakuRQFM5HOyJjXL3qrnQYph3dL15_1fPHG
+GET  {{baseUrl}}/tournees/1
+Authorization: Bearer MTY.4OBLfAhlBr0DVZPYbVyw56UCe77-o0vPT_woTbsRBi-JF70R3JhdraqTWEcD
 
 ### update assigned delivery 
 POST  {{baseUrl}}/tournees/updateState
@@ -111,6 +112,6 @@ Authorization: Bearer OTk.m56uKNjDp_a0FhEjSg0bh3zx0Hrx7RTVaAR182PuGLaocLhti_n1zE
 }
 
 ### DELETE one tournee
-DELETE {{baseUrl}}/tournees/2
-Authorization: Bearer MTU.U-j67yYWgCs9HV8mJap45d8vci6WQcIjTENSsblZruyY8Ntjv2F7ergBYpk6
+DELETE {{baseUrl}}/tournees/12
+Authorization: Bearer MQ.HuWfNXJWZb4RIowq9FJeb8W_4lhi8h5BOYVBF2Jmn1rs-pQMBRf2C6g2UQCM
 

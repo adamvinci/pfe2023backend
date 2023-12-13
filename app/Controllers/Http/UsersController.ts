@@ -14,6 +14,9 @@ export default class UserController {
 
   public async deleteOne({ response, params }: HttpContextContract) {
     const idUser = params.id
+    if (isNaN(Number(idUser))) {
+      return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+    }
     const livreur = await User.find(idUser)
     if (livreur == null) return response.notFound();
     if (livreur.isAdmin) return response.forbidden({ message: "This user cannot be deleted" });

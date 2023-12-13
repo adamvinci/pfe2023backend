@@ -15,18 +15,41 @@ export default class TourneesController {
         const tournees = await Tournee.query().preload('user').preload('creches')
         return response.ok(tournees)
     }
+    public async getOne({ params, response, }: HttpContextContract) {
+        const idTournee = params.id
+        if (isNaN(Number(idTournee))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
+        const tournee = await Tournee.query().where("id", idTournee).preload('creches');
+        if (tournee == null) return response.notFound();
+        return response.ok({ tournee });
+    }
 
 
     // create a tournee and assign the tournee to the nursery
     public async createOne({ request, response }: HttpContextContract) {
 
         const payload = await request.validate(CreateValidator);
+
+        if (payload.creches) {
+            let invalidCreches = '';
+            for (const crecheId of payload.creches) {
+                const creche = await Creche.findOrFail(crecheId);
+                if (creche.nombreCaisseGant === null) {
+                    invalidCreches += (creche.nom) + ", "
+                }
+            }
+            if (invalidCreches !== '') {
+                return response.badRequest({ message: `These nursery dont have quantity of box intialized: ${invalidCreches}` })
+            }
+        }
         //create tournee without delivery man
-        const tournee = new Tournee();
+        let tournee = new Tournee();
         await Database.transaction(async (trx) => {
+            tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire;
             tournee.nom = payload.nom
             await tournee.useTransaction(trx).save();
-            const tourneeId = tournee.$attributes.id
+            const tourneeId = tournee.id
             //assign tourneesid to nursery
             const { creches } = payload;
             for (const id of creches) {
@@ -34,7 +57,10 @@ export default class TourneesController {
                 creche.tourneeId = tourneeId;
                 await creche.useTransaction(trx).save();
             }
+
+            await this._createQuantity(tournee, payload.creches, trx)
         })
+
         const createdTournee = await Tournee.query().where('id', tournee.id).preload('user').preload('creches')
         return response.ok({ createdTournee })
     }
@@ -117,9 +143,12 @@ export default class TourneesController {
 
     public async deleteOne({ response, params }: HttpContextContract) {
         const idDelivery = params.id
+        if (isNaN(Number(idDelivery))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
         const tournee = await Tournee.find(idDelivery)
         if (tournee == null) return response.notFound();
-        const creches = await Creche.query().where('tourneeId', tournee.$attributes.id);
+        const creches = await Creche.query().where('tourneeId', tournee.id);
         await Database.transaction(async (trx) => {
             if (creches) {
                 for (const creche of creches) {
@@ -135,19 +164,19 @@ export default class TourneesController {
     }
 
     public async updateOne({ response, request }: HttpContextContract) {
-        const payload = await request.validate(UpdateOneValidator)
-        /* if (payload.creches) {
-             let invalidCreches = '';
-             for (const crecheId of payload.creches) {
-                 const creche = await Creche.findOrFail(crecheId);
-                 if (creche.tourneeId !== null && creche.tourneeId !== payload.deliveryId) {
-                     invalidCreches += (creche.$attributes.nom) + ", "
-                 }
-             }
-             if (invalidCreches !== '') {
-                 return response.badRequest({ message: `These nursery are already in a tournee: ${invalidCreches}` })
-             }
-         }*/
+        const payload = await request.validate(UpdateOneValidator);
+        if (payload.creches) {
+            let invalidCreches = '';
+            for (const crecheId of payload.creches) {
+                const creche = await Creche.findOrFail(crecheId);
+                if (creche.nombreCaisseGant === null) {
+                    invalidCreches += (creche.nom) + ", "
+                }
+            }
+            if (invalidCreches !== '') {
+                return response.badRequest({ message: `These nursery dont have quantity of box intialized: ${invalidCreches}` })
+            }
+        }
         const tournee = await Tournee.findOrFail(payload.deliveryId);
         tournee.nom = payload.nom ?? tournee.nom;
         tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire ?? tournee.pourcentageSupplementaire;
@@ -162,6 +191,45 @@ export default class TourneesController {
             await tournee.useTransaction(trx).save();
         })
         return response.ok({ message: "Delivery has been succesfully updated" })
+    }
+
+    async _createQuantity(tournee: Tournee, arrayOfCrecheId, trx) {
+        const creches = await Creche.query().whereIn('id', arrayOfCrecheId);
+        console.log(tournee)
+        const percentageFactor = (tournee.pourcentageSupplementaire / 100);
+        const sumAttributes = creches.reduce((acc, creche) => {
+            acc.nombreCaisseLingeSSum += creche.nombreCaisseLingeS;
+            acc.nombreCaisseLingeMSum += creche.nombreCaisseLingeM;
+            acc.nombreCaisseLingeLSum += creche.nombreCaisseLingeL;
+            acc.nombreCaisseInsertSum += creche.nombreCaisseInsert;
+            acc.nombreCaisseSacPoubelleSum += creche.nombreCaisseSacPoubelle;
+            acc.nombreCaisseGantSum += creche.nombreCaisseGant;
+            return acc;
+        }, {
+            nombreCaisseLingeSSum: 0,
+            nombreCaisseLingeMSum: 0,
+            nombreCaisseLingeLSum: 0,
+            nombreCaisseInsertSum: 0,
+            nombreCaisseSacPoubelleSum: 0,
+            nombreCaisseGantSum: 0,
+        });
+        console.log(sumAttributes)
+        // Calcul the total amount of box to take
+        tournee.$attributes.userId = null
+        tournee.nombreCaisseGantAPrendre = sumAttributes.nombreCaisseGantSum
+        tournee.nombreCaisseLingeSAprendre = sumAttributes.nombreCaisseLingeSSum
+        tournee.nombreCaisseLingeMAprendre = sumAttributes.nombreCaisseLingeMSum
+        tournee.nombreCaisseLingeLAprendre = sumAttributes.nombreCaisseLingeLSum
+        tournee.nombreCaisseInsertAPrendre = sumAttributes.nombreCaisseInsertSum
+        tournee.nombreCaisseSacPoubelleAPrendre = sumAttributes.nombreCaisseSacPoubelleSum
+        // Calcul the extra box to take
+        tournee.nombreCaisseGantSupplementaire = Math.round(sumAttributes.nombreCaisseGantSum * percentageFactor);
+        tournee.nombreCaisseLingeSSupplementaire = Math.round(sumAttributes.nombreCaisseLingeSSum * percentageFactor);
+        tournee.nombreCaisseLingeMSupplementaire = Math.round(sumAttributes.nombreCaisseLingeMSum * percentageFactor);
+        tournee.nombreCaisseLingeLSupplementaire = Math.round(sumAttributes.nombreCaisseLingeLSum * percentageFactor);
+        tournee.nombreCaisseInsertSupplementaire = Math.round(sumAttributes.nombreCaisseInsertSum * percentageFactor);
+        tournee.nombreCaisseSacPoubelleSupplementaire = Math.round(sumAttributes.nombreCaisseSacPoubelleSum * percentageFactor);
+        await tournee.useTransaction(trx).save();
     }
 
 }

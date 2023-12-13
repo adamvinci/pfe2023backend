@@ -32,10 +32,11 @@ Route.post('/auth/resetPasswordAdmin', 'AuthController.forgotPassword') // Send 
 
 //TourneeController
 Route.get('/tournees', 'TourneesController.getAll').middleware('auth') // Send the delivery with no assigned delivery man
+Route.get('/tournees/:id', 'TourneesController.getOne').middleware('auth') // getOne delivery
 Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin') // Create a delivery and add nursery to this delivery
 Route.delete('/tournees/:id', 'TourneesController.deleteOne').middleware('isAdmin')
-Route.post('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth') //todo
-Route.post('/tournees/updateOne', 'TourneesController.updateOne').middleware('isAdmin') //todo
+Route.post('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth')
+Route.post('/tournees/updateOne', 'TourneesController.updateOne').middleware('isAdmin')
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin') // Return all the nursery

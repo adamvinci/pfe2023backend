@@ -12,6 +12,9 @@ export default class CrechesController {
 
     public async getOne({ params, response, }: HttpContextContract) {
         const idCreche = params.id
+        if (isNaN(Number(idCreche))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
         return response.ok({ creche });
@@ -27,6 +30,9 @@ export default class CrechesController {
 
     public async addNurseryCommand({ params, request, response, }: HttpContextContract) {
         const idCreche = params.idCreche;
+        if (isNaN(Number(idCreche))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
         const payload = await request.validate(CreateDeliveryValidatorRequest);
 
         const creche = await Creche.find(idCreche);
@@ -39,6 +45,9 @@ export default class CrechesController {
 
     public async deleteOne({ response, params }: HttpContextContract) {
         const idCreche = params.id
+        if (isNaN(Number(idCreche))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
         creche.delete()
@@ -47,6 +56,9 @@ export default class CrechesController {
 
     public async deleteFromTournee({ response, params }: HttpContextContract) {
         const idCreche = params.id
+        if (isNaN(Number(idCreche))) {
+            return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
+        }
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
         creche.$attributes.tourneeId = null;

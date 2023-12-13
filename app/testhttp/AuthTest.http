@@ -4,7 +4,7 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "nom":"maximilien",
+    "nom":"maximilien.ernst@snappies.be",
     "password":"71password"
 }
 
