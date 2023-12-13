@@ -22,7 +22,6 @@ export default class CrechesController {
 
     public async createOne({ request, response, }: HttpContextContract) {
         const payload = await request.validate(CreateValidator)
-
         const newCreche = await Creche.create(payload)
 
         return response.created(newCreche) // 201 CREATED
@@ -34,7 +33,7 @@ export default class CrechesController {
             return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
         }
         const payload = await request.validate(CreateDeliveryValidatorRequest);
-
+        console.log(payload)
         const creche = await Creche.find(idCreche);
         if (creche == null) {
             return response.notFound({ message: 'nursery not found' })

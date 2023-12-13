@@ -32,7 +32,7 @@ export default class CreateDeliveryValidator {
     nombreCaisseGant: schema.number([rules.unsigned()]),
     nom: schema.string.optional([rules.minLength(3)]),
     gsm: schema.string.optional([rules.minLength(10)]),
-    adresse: schema.string.optional([rules.minLength(5), rules.unique({ table: 'creches', column: 'adresse' })]),
+    adresse: schema.string.optional([rules.minLength(5)]),
     ville: schema.string.optional([rules.minLength(5)]),
   })
 
@@ -48,6 +48,7 @@ export default class CreateDeliveryValidator {
    *
    */
   public messages: CustomMessages = {
+    required: `{{field}} is required`,
     unsigned: `{{field}} must be >=0`,
     minLength: `{{field}} must be at least {{options.minLength}} long`,
     'adresse.unique': 'This adresse already exists',

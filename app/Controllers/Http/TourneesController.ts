@@ -77,23 +77,23 @@ export default class TourneesController {
         // Check if this delivery is assigned to this user
         const allDeliveries = await Tournee.query()
             .where('user_id', userId.id)
-        
+
 
         if (allDeliveries == null) {
             return response.notFound({ message: 'You cannot update this delivery' });
         }
 
         const creche = await Creche.findOrFail(nurseryId)
-        let liv=0;
-        for(let i = 0; i < allDeliveries.length; i++){
+        let liv = 0;
+        for (let i = 0; i < allDeliveries.length; i++) {
             if (creche.tourneeId == allDeliveries[i].id) {
                 liv++;
             }
         }
-        if (liv==0) {
+        if (liv == 0) {
             return response.badRequest({ message: 'This nursery is not assigned to those deliveries' })
         }
-        
+
 
         //si y'a une erreur d'encodage?
         if (creche.isDelivered) {
@@ -137,61 +137,61 @@ export default class TourneesController {
             stockSupplementaire.nombreCaisseLingeL += allDeliveries[i].nombreCaisseLingeLSupplementaire;
             stockSupplementaire.nombreCaisseLingeM += allDeliveries[i].nombreCaisseLingeMSupplementaire;
             stockSupplementaire.nombreCaisseLingeS += allDeliveries[i].nombreCaisseLingeSSupplementaire;
-            
+
             if (diffNombreCaisseGant != 0) {
-                if(allDeliveries[i].nombreCaisseGantSupplementaire>diffNombreCaisseGant) {
-                    allDeliveries[i].nombreCaisseGantSupplementaire+= -diffNombreCaisseGant;
-                    diffNombreCaisseGant=0;
-                }else{
-                    diffNombreCaisseGant-=allDeliveries[i].nombreCaisseGantSupplementaire;
-                    allDeliveries[i].nombreCaisseGantSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseGantSupplementaire > diffNombreCaisseGant) {
+                    allDeliveries[i].nombreCaisseGantSupplementaire += -diffNombreCaisseGant;
+                    diffNombreCaisseGant = 0;
+                } else {
+                    diffNombreCaisseGant -= allDeliveries[i].nombreCaisseGantSupplementaire;
+                    allDeliveries[i].nombreCaisseGantSupplementaire = 0;
                 }
             } else if (diffNombreCaisseSacPoubelle != 0) {
-                if(allDeliveries[i].nombreCaisseSacPoubelleSupplementaire>diffNombreCaisseSacPoubelle) {
-                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire+= -diffNombreCaisseSacPoubelle;
-                    diffNombreCaisseSacPoubelle=0;
-                }else{
-                    diffNombreCaisseSacPoubelle-=allDeliveries[i].nombreCaisseSacPoubelleSupplementaire;
-                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseSacPoubelleSupplementaire > diffNombreCaisseSacPoubelle) {
+                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire += -diffNombreCaisseSacPoubelle;
+                    diffNombreCaisseSacPoubelle = 0;
+                } else {
+                    diffNombreCaisseSacPoubelle -= allDeliveries[i].nombreCaisseSacPoubelleSupplementaire;
+                    allDeliveries[i].nombreCaisseSacPoubelleSupplementaire = 0;
                 }
             } else if (diffNombreCaisseInsert != 0) {
-                if(allDeliveries[i].nombreCaisseInsertSupplementaire>diffNombreCaisseInsert) {
-                    allDeliveries[i].nombreCaisseInsertSupplementaire+= -diffNombreCaisseInsert;
-                    diffNombreCaisseInsert=0;
-                }else{
-                    diffNombreCaisseInsert-=allDeliveries[i].nombreCaisseInsertSupplementaire;
-                    allDeliveries[i].nombreCaisseInsertSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseInsertSupplementaire > diffNombreCaisseInsert) {
+                    allDeliveries[i].nombreCaisseInsertSupplementaire += -diffNombreCaisseInsert;
+                    diffNombreCaisseInsert = 0;
+                } else {
+                    diffNombreCaisseInsert -= allDeliveries[i].nombreCaisseInsertSupplementaire;
+                    allDeliveries[i].nombreCaisseInsertSupplementaire = 0;
                 }
             } else if (diffNombreCaisseLingeL != 0) {
-                if(allDeliveries[i].nombreCaisseLingeLSupplementaire>diffNombreCaisseLingeL) {
-                    allDeliveries[i].nombreCaisseLingeLSupplementaire+= -diffNombreCaisseLingeL;
-                    diffNombreCaisseLingeL=0;
-                }else{
-                    diffNombreCaisseLingeL-=allDeliveries[i].nombreCaisseLingeLSupplementaire;
-                    allDeliveries[i].nombreCaisseLingeLSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseLingeLSupplementaire > diffNombreCaisseLingeL) {
+                    allDeliveries[i].nombreCaisseLingeLSupplementaire += -diffNombreCaisseLingeL;
+                    diffNombreCaisseLingeL = 0;
+                } else {
+                    diffNombreCaisseLingeL -= allDeliveries[i].nombreCaisseLingeLSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeLSupplementaire = 0;
                 }
 
             } else if (diffNombreCaisseLingeM != 0) {
-                if(allDeliveries[i].nombreCaisseLingeMSupplementaire>diffNombreCaisseLingeM) {
-                    allDeliveries[i].nombreCaisseLingeMSupplementaire+= -diffNombreCaisseLingeM;
-                    diffNombreCaisseLingeM=0;
-                }else{
-                    diffNombreCaisseLingeM-=allDeliveries[i].nombreCaisseLingeMSupplementaire;
-                    allDeliveries[i].nombreCaisseLingeMSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseLingeMSupplementaire > diffNombreCaisseLingeM) {
+                    allDeliveries[i].nombreCaisseLingeMSupplementaire += -diffNombreCaisseLingeM;
+                    diffNombreCaisseLingeM = 0;
+                } else {
+                    diffNombreCaisseLingeM -= allDeliveries[i].nombreCaisseLingeMSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeMSupplementaire = 0;
                 }
 
             } else if (diffNombreCaisseLingeS != 0) {
-                if(allDeliveries[i].nombreCaisseLingeSSupplementaire>diffNombreCaisseLingeS) {
-                    allDeliveries[i].nombreCaisseLingeSSupplementaire+= -diffNombreCaisseLingeS;
-                    diffNombreCaisseLingeS=0;
-                }else{
-                    diffNombreCaisseLingeS-=allDeliveries[i].nombreCaisseLingeSSupplementaire;
-                    allDeliveries[i].nombreCaisseLingeSSupplementaire=0;
+                if (allDeliveries[i].nombreCaisseLingeSSupplementaire > diffNombreCaisseLingeS) {
+                    allDeliveries[i].nombreCaisseLingeSSupplementaire += -diffNombreCaisseLingeS;
+                    diffNombreCaisseLingeS = 0;
+                } else {
+                    diffNombreCaisseLingeS -= allDeliveries[i].nombreCaisseLingeSSupplementaire;
+                    allDeliveries[i].nombreCaisseLingeSSupplementaire = 0;
                 }
             }
 
         }
-        
+
         //verification si la demande a completement abouti
         if (diffNombreCaisseGant > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseGantSupplementaire' });
@@ -206,7 +206,7 @@ export default class TourneesController {
         } else if (diffNombreCaisseLingeS > 0) {
             return response.badRequest({ message: 'Not enough extra quantity in stock for: nombreCaisseLingeSSupplementaire' });
         }
-        
+
 
         await Database.transaction(async (trx) => {
             for (const updatedDelivery of allDeliveries) {
@@ -217,7 +217,7 @@ export default class TourneesController {
                         nombreCaisseSacPoubelleSupplementaire: updatedDelivery.nombreCaisseSacPoubelleSupplementaire,
                     });
             }
-    
+
             creche.isDelivered = true;
             await creche.useTransaction(trx).save();
         });
@@ -251,6 +251,7 @@ export default class TourneesController {
 
     public async updateOne({ response, request }: HttpContextContract) {
         const payload = await request.validate(UpdateOneValidator);
+        console.log(payload)
         if (payload.creches) {
             let invalidCreches = '';
             for (const crecheId of payload.creches) {
@@ -281,7 +282,6 @@ export default class TourneesController {
 
     async _createQuantity(tournee: Tournee, arrayOfCrecheId, trx) {
         const creches = await Creche.query().whereIn('id', arrayOfCrecheId);
-        console.log(tournee)
         const percentageFactor = (tournee.pourcentageSupplementaire / 100);
         const sumAttributes = creches.reduce((acc, creche) => {
             acc.nombreCaisseLingeSSum += creche.nombreCaisseLingeS;
@@ -299,7 +299,7 @@ export default class TourneesController {
             nombreCaisseSacPoubelleSum: 0,
             nombreCaisseGantSum: 0,
         });
-        console.log(sumAttributes)
+
         // Calcul the total amount of box to take
         tournee.$attributes.userId = null
         tournee.nombreCaisseGantAPrendre = sumAttributes.nombreCaisseGantSum

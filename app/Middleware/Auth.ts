@@ -24,7 +24,6 @@ export default class AuthMiddleware {
    * during the current request.
    */
   protected async authenticate(auth: HttpContextContract['auth'], guards: (keyof GuardsList)[]) {
-    console.log(auth)
     /**
      * Hold reference to the guard last attempted within the for loop. We pass
      * the reference of the guard to the "AuthenticationException", so that
