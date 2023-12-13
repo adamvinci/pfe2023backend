@@ -22,7 +22,7 @@ Content-Type: application/json
 
 {
     "nom":"livreur1",
-    "password":"12345"
+    "password":"livreur1"
 }
 
 ### register livreur with admin token
