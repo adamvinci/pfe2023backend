@@ -33,7 +33,7 @@ export default class CrechesController {
             return response.status(400).json({ error: 'Invalid ID format. Must be a number.' });
         }
         const payload = await request.validate(CreateDeliveryValidatorRequest);
-        console.log(payload)
+
         const creche = await Creche.find(idCreche);
         if (creche == null) {
             return response.notFound({ message: 'nursery not found' })
@@ -49,7 +49,7 @@ export default class CrechesController {
         }
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
-        creche.delete()
+        await creche.delete()
         return response.ok({ message: "Creche deleted" });
     }
 
@@ -61,7 +61,7 @@ export default class CrechesController {
         const creche = await Creche.find(idCreche)
         if (creche == null) return response.notFound();
         creche.$attributes.tourneeId = null;
-        creche.save()
+        await creche.save()
         return response.ok({ message: "Creche removed from tournee" });
     }
 

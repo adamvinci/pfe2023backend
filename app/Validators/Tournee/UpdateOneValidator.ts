@@ -42,7 +42,8 @@ export default class UpdateOneValidator {
 
   public schema = schema.create({
     deliveryId: schema.number([rules.unsigned(), rules.exists({ table: 'tournees', column: 'id' })]),
-    nom: schema.string.optional([rules.minLength(3), rules.unique({ table: 'tournees', column: 'nom' })]),
+    nom: schema.string.optional([rules.minLength(3),]),
+    deliveryMan: schema.number.optional([rules.unsigned(), rules.exists({ table: 'users', column: 'id', where: { is_admin: false } })]),
     pourcentageSupplementaire: schema.number.optional([rules.unsigned()]),
     creches: schema.array.optional([rules.distinct('*'), rules.minLength(1)])
       .members(schema.number([rules.exists({ table: 'creches', column: 'id' })])),
@@ -64,7 +65,8 @@ export default class UpdateOneValidator {
     unsigned: `{{field}} must be >=0`,
     minLength: `{{field}} must be at least {{options.minLength}} long`,
     'creches.*.exists': 'This nursery does not exist',
-    'nom.unique': 'This name is already taken'
+    'nom.unique': 'This name is already taken',
+    'deliveryMan.exists': 'This user does not exist or cant deliver'
   }
 
 

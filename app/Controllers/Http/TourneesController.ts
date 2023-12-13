@@ -251,7 +251,6 @@ export default class TourneesController {
 
     public async updateOne({ response, request }: HttpContextContract) {
         const payload = await request.validate(UpdateOneValidator);
-        console.log(payload)
         if (payload.creches) {
             let invalidCreches = '';
             for (const crecheId of payload.creches) {
@@ -264,8 +263,15 @@ export default class TourneesController {
                 return response.badRequest({ message: `These nursery dont have quantity of box intialized: ${invalidCreches}` })
             }
         }
+        if (payload.nom) {
+            const tournee = await Tournee.findBy("nom", payload.nom);
+            if (tournee && (tournee.id !== payload.deliveryId)) {
+                return response.conflict({ message: "This name is already taken" })
+            }
+        }
         const tournee = await Tournee.findOrFail(payload.deliveryId);
         tournee.nom = payload.nom ?? tournee.nom;
+        tournee.$attributes.userId = payload.deliveryMan ?? tournee.userId
         tournee.pourcentageSupplementaire = payload.pourcentageSupplementaire ?? tournee.pourcentageSupplementaire;
         await Database.transaction(async (trx) => {
             if (payload.creches) {
