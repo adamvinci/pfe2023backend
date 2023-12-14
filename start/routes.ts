@@ -31,16 +31,16 @@ Route.post('/auth/updatePassword', 'AuthController.updatePassword').middleware('
 Route.post('/auth/resetPasswordAdmin', 'AuthController.forgotPassword') // Send a new password to the admin 
 
 //TourneeController
-Route.get('/tournees', 'TourneesController.getAll').middleware('auth') // Send the delivery with no assigned delivery man
+Route.get('/tournees', 'TourneesController.getAll').middleware('auth') // Send all the delivery 
 Route.get('/tournees/:id', 'TourneesController.getOne').middleware('auth') // getOne delivery
 Route.post('/tournees', 'TourneesController.createOne').middleware('isAdmin') // Create a delivery and add nursery to this delivery
 Route.delete('/tournees/:id', 'TourneesController.deleteOne').middleware('isAdmin')
-Route.post('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth')
-Route.post('/tournees/updateOne', 'TourneesController.updateOne').middleware('isAdmin')
+Route.post('/tournees/updateState', 'TourneesController.updateDeliveryQuantity').middleware('auth')// update the extra quanity in the deliveryMan truck
+Route.post('/tournees/updateOne', 'TourneesController.updateOne').middleware('isAdmin') // update the nursery the name and the delivery man of a delivery
 
 // CrecheController
 Route.get('/creches', 'CrechesController.getAll').middleware('isAdmin') // Return all the nursery
-Route.get('/creches/:id', 'CrechesController.getOne').middleware('auth') // Return all the nursery
+Route.get('/creches/:id', 'CrechesController.getOne').middleware('auth') // Return one the nursery
 Route.post('/creches', 'CrechesController.createOne').middleware('isAdmin') // Create one nursery
 Route.post('/creches/:idCreche', 'CrechesController.addNurseryCommand').middleware('isAdmin') // Add the quantity of box asked by the nursery
 Route.delete('/creche/:id', 'CrechesController.deleteOne').middleware('isAdmin')

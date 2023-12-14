@@ -215,6 +215,10 @@ export default class TourneesController {
                     .update({
                         nombreCaisseGantSupplementaire: updatedDelivery.nombreCaisseGantSupplementaire,
                         nombreCaisseSacPoubelleSupplementaire: updatedDelivery.nombreCaisseSacPoubelleSupplementaire,
+                        nombreCaisseLingeSSupplementaire: updatedDelivery.nombreCaisseLingeSSupplementaire,
+                        nombreCaisseLingeMSupplementaire: updatedDelivery.nombreCaisseLingeMSupplementaire,
+                        nombreCaisseLingeLSupplementaire: updatedDelivery.nombreCaisseLingeLSupplementaire,
+                        nombreCaisseInsertSupplementaire: updatedDelivery.nombreCaisseInsertSupplementaire
                     });
             }
 
